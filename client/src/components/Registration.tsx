@@ -3,7 +3,7 @@ import { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { authUser } from '../api/auth';
 import { postUsers } from '../api/postUser';
-import '../style/main.css';
+import {  Form, Label } from '../styledComponents/Form';
 
 export const Registration =  ():JSX.Element => {
 
@@ -33,17 +33,20 @@ export const Registration =  ():JSX.Element => {
 
   return (
     <div>
-      <form action="" 
-        onSubmit={handleSubmit}
-        className="main">
-        <label className="label">Заполните форму</label>
+      <Form action="" onSubmit={handleSubmit}>
+        <h3>Регистрация</h3>
+        <Label>Имя:</Label>
         <input type="text" name="userName" placeholder="Введите ваше имя"/>
+        <Label>email:</Label>
         <input type="email" name="email" placeholder="Введите ваш email"/>
+        <Label>пароль:</Label>
         <input type="password" name="password" placeholder="Введите ваш пароль"/>
+        <Label>Повторите пароль:</Label>
         <input type="password" name="againPassword" placeholder="Повторите пароль"/>
+        <Label>Укажите дату рождения:</Label>
         <input type="date" name="birthday" placeholder="Введите дату рождения"/>
-        <button>Зарегистрироваться</button>
-      </form>
+        <button style={{marginTop: '20px'}}>Зарегистрироваться</button>
+      </Form>
     </div>
   );
 };

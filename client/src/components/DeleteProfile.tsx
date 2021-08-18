@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormEvent } from 'react';
-import '../style/main.css';
+import { Form } from '../styledComponents/Form';
 import { useDispatch } from 'react-redux';
 import { deleteUsers } from '../api/deleteUser';
 import { useSelector } from 'react-redux';
@@ -31,14 +31,12 @@ export const DeleteProfile =  ():JSX.Element => {
 
   return (
     <div>
-      <form action=""
-        onSubmit={handleSubmit}
-        className="main">
+      <Form action="" onSubmit={handleSubmit}>
         <label className="label">Заполните форму</label>
         <input type="email" name="email" placeholder="Введите ваш email"/>
         <input type="password" name="password" placeholder="Введите ваш пароль"/>       
         <button>удалить</button>
-      </form>
+      </Form>
     </div>
   );
 };

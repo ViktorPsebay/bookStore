@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormEvent } from 'react';
-import '../style/main.css';
 import { authUser } from '../api/auth';
+import { Form } from '../styledComponents/Form';
 
 export const Auth =  ():JSX.Element => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -17,14 +17,14 @@ export const Auth =  ():JSX.Element => {
 
   return (
     <div>
-      <form action=""
-        onSubmit={handleSubmit}
-        className="main">
-        <label className="label">Заполните форму</label>
+      <Form action="" onSubmit={handleSubmit}>
+        <h3 className="label">Авторизация</h3>
+        <label>email:</label>
         <input type="email" name="email" placeholder="Введите ваш email"/>
+        <label>пароль:</label>
         <input type="password" name="password" placeholder="Введите ваш пароль"/>
-        <button>Войти</button>
-      </form>
+        <button style={{marginTop: '20px'}}>Войти</button>
+      </Form>
     </div>
   );
 };

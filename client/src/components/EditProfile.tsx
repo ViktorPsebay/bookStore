@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormEvent } from 'react';
-import '../style/main.css';
+import { Form } from '../styledComponents/Form';
 import { useDispatch } from 'react-redux';
 import { editUsers } from '../api/editUser';
 
@@ -22,16 +22,14 @@ export const EditProfile =  ():JSX.Element => {
 
   return (
     <div>
-      <form action=""
-        onSubmit={handleSubmit}
-        className="main">
+      <Form action="" onSubmit={handleSubmit}>
         <label className="label">Заполните форму</label>
         <input type="text" name="userName" placeholder="Введите ваше имя"/>
         <input type="email" name="email" placeholder="Введите ваш email"/>
         <input type="password" name="password" placeholder="Введите ваш пароль"/>
         <input type="date" name="birthday" placeholder="Введите дату рождения"/>
         <button>Редактировать</button>
-      </form>
+      </Form>
     </div>
   );
 };

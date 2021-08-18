@@ -6,3 +6,8 @@ export const typesOfAction = {
   addOneUser: 'ADD_ONE_USER',
   setUser: 'SET_USER',
 };
+
+export const modesOfLogin = {
+  authorization: 'AUTHORIZATION',
+  registration: 'REGISTRATION',
+};
