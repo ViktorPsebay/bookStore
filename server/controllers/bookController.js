@@ -66,16 +66,19 @@ class BookController {
         where:{bookId: id}, raw: true});
       res.status(200).json(rates);
       await Book.update({rating: rates['avg']}, {where:{id}});
-      // let sum = 0;
-      // rates.map(item => {
-      //   sum += item['ratings.rate'];  
-      // });
+    }
+    catch(e) {
+      console.log(e);
+    }
+  }
 
-      // const average = sum /rates.length;
-
-      // console.log(sum);
-      // res.status(200).json({rates, sum, average});
-      // await Book.update({rating: average}, {where:{id}});
+    async getBookByCategoryId(req, res) {
+    try {
+      const { id } = req.params;
+      const books = await Book.findAll({              
+        attributes: ['id', 'title', 'author', 'price', 'rating', 'description'],
+        where:{categoryId: id}, raw: true});
+      res.status(200).json(books);
     }
     catch(e) {
       console.log(e);

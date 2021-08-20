@@ -4,7 +4,7 @@ import { deleteUser } from '../store/action';
 import { instance } from '.';
 
 export const deleteUsers = (user: {
-  id: number | undefined,
+  id: number,
   email: string,
   password: string,
 }, token: string) => {
@@ -23,6 +23,7 @@ export const deleteUsers = (user: {
     if (response.status == 200) {
       console.log(result);
       const users = [{
+        id: user.id,
         email: user.email,
       }];
       dispatch(deleteUser(users));

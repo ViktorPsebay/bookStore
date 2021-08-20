@@ -9,14 +9,20 @@ import { usersInterface } from '../types/types';
 export const DeleteProfile =  ():JSX.Element => {
   const dispatch = useDispatch();
   interface RootState {
-    authUser: usersInterface | null
+    authUser: usersInterface,
   }  
-  const id = useSelector((state: RootState) => state.authUser?.id);  
+  const id = useSelector((state: RootState) => state.authUser.id) || 0;  
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const { password, email} = e.currentTarget;
+
+    interface userInter {
+      id: number,
+      email: string,
+      password: string,
+    }
     
-    const user = {
+    const user: userInter = {
       id,
       email: email.value,
       password: password.value,

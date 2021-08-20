@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { checkToken } from '../api/checkToken';
+import { setUserInStore } from '../api/setUser';
 
 export const HomePage = ():JSX.Element => {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ export const HomePage = ():JSX.Element => {
   useEffect(() => {
     const token = 'Bearer ' + localStorage.getItem('userToken');
 
-    dispatch(checkToken(token));
+    dispatch(setUserInStore(token));
  
   });
   return (<h1>Home Page</h1>);

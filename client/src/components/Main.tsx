@@ -9,6 +9,8 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { ProtectedPage } from './ProtectedPage';
 import { HomePage } from './HomePage';
 import { UserProfile } from './UserProfile';
+import { Books } from './Books';
+import { Favorites } from './Favorites';
 
 export const Main = ():JSX.Element => {
   return (
@@ -25,12 +27,20 @@ export const Main = ():JSX.Element => {
         <Users />
       </Route>
 
+      <Route path="/books">
+        <Books />
+      </Route>
+
       <Route path="/editing">
         <EditProfile />
       </Route>
 
       <Route path="/deleting">
         <DeleteProfile />
+      </Route>
+
+      <Route path="/favorites">
+        <Favorites />
       </Route>
 
       <ProtectedRoute path="/profile">

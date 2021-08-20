@@ -37,6 +37,8 @@ router.get('/books/:id', bookController.getOneBook);
 
 router.get('/books/get_rates/:id', bookController.getRatingByBookId);
 
+router.get('/books/get_by_category/:id', bookController.getBookByCategoryId);
+
 router.post('/books/get_by_author/', bookController.getBooksByAuthor);
 
 router.post('/books/get_by_title/', bookController.getBooksByTitle);
@@ -73,6 +75,7 @@ router.delete('/reviews/:id', reviewController.deleteReview);
 
 
 router.post('/favorites/', favoritesController.create);
+router.post('/favorites/get_id', favoritesController.getId);
 
 router.get('/favorites/', favoritesController.getAllFavorites);
 

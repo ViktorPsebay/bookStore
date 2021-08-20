@@ -1,21 +1,31 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { usersInterface } from '../types/types';
-
+import { setUserInStore } from '../api/setUser';
+import { checkToken } from '../api/checkToken';
 
 export const ProtectedRoute = ({ children, ...rest }: {children: JSX.Element, path: string}): JSX.Element => {
-  interface RootState {
-    authUser: usersInterface | null
-  }
+ 
+  const dispatch = useDispatch();
+  const [hasRight, setRight] = useState(true);
 
-  const isAuth = useSelector((state: RootState) => state.authUser);
+  const check = async () => {
+    const token = 'Bearer ' + localStorage.getItem('userToken');    
+    const check = await checkToken(token);
+    setRight(check);
+  };
+
+  useEffect(() => {        
+    const token = 'Bearer ' + localStorage.getItem('userToken');
+    dispatch(setUserInStore(token));
+    check();
+  }, []);
   
   return (
     <Route
       {...rest}
       render={() =>
-        isAuth ? (
+        hasRight ? (
           children
         ) : (
           <Redirect

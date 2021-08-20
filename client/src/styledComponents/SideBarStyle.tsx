@@ -1,10 +1,11 @@
 import styled, { css } from 'styled-components';
 
-export const NavBar = styled.ul`
-  width: 100%;
+export const SideBarStyle = styled.ul`
+  max-width: 200px;
   display: flex;
-  justify-content:space-around;
-  padding: 0;
+  /* justify-content:space-around; */
+  flex-direction: column;
+  padding: 15px;
   ${props =>
     props.children &&
     css`
