@@ -1,16 +1,16 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { Auth } from './Auth';
-import { EditProfile } from './EditProfile';
-import { DeleteProfile } from './DeleteProfile';
-import { Registration } from './Registration';
-import { Users } from './Users';
+import { Auth } from './Users/Auth';
+import { EditProfile } from './Users/EditProfile';
+import { DeleteProfile } from './Users/DeleteProfile';
+import { Registration } from './Users/Registration';
+import { Users } from './Users/Users';
 import { ProtectedRoute } from './ProtectedRoute';
 import { ProtectedPage } from './ProtectedPage';
 import { HomePage } from './HomePage';
-import { UserProfile } from './UserProfile';
-import { Books } from './Books';
-import { Favorites } from './Favorites';
+import { UserProfile } from './Users/UserProfile';
+import { Books } from './Books/';
+import { Favorites } from './Users/Favorites';
 
 export const Main = ():JSX.Element => {
   return (

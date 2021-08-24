@@ -1,4 +1,4 @@
-import { Book, Rating, User } from '../models/models.js';
+import { Book, Rating, User } from '../model/models.js';
 
 class RatingController {
   async create(req, res) {

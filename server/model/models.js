@@ -1,7 +1,9 @@
 import Sequelize from 'sequelize';
-import { connection } from '../config/config.js'; 
+import { connection } from '../conf/config.js'; 
 
 export const sequelize = new Sequelize(connection);
+// const queryInterface = sequelize.getQueryInterface();
+// queryInterface.addColumn('user', 'AuthorId', { type: Sequelize.INTEGER });
 
 export const User = sequelize.define('user', {
   id: {
@@ -114,6 +116,28 @@ export const FavoriteBook = sequelize.define('favorite_book', {
   }
 });
 
+export const BookAuthor = sequelize.define('book_author', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false
+  }
+});
+
+export const Author = sequelize.define('author', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
 User.hasMany(FavoriteBook);
 FavoriteBook.belongsTo(User);
 
@@ -134,3 +158,9 @@ Review.belongsTo(User);
 
 Category.hasMany(Book);
 Book.belongsTo(Category);
+
+Author.hasMany(BookAuthor);
+BookAuthor.belongsTo(Author);
+
+Book.hasMany(BookAuthor);
+BookAuthor.belongsTo(Book);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { booksInterface, categoriesInterface } from '../types/types';
+import { booksInterface, categoriesInterface } from '../../types/types';
 import { CategoryItem } from './CategoryItem';
 
 interface CategoriesListProps {

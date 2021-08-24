@@ -3,7 +3,7 @@ import { instance } from '.';
 export const checkToken = async (token: string): Promise<boolean> => {
   
   try {
-    const response = await instance('/users/check_token', {
+    const response = await instance('/users/token/check', {
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
         'authorization': token

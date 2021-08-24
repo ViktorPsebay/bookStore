@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { UsersList } from './UsersList';
 import { useSelector, useDispatch } from 'react-redux';
-import { usersInterface } from '../types/types';
-import { getUsers } from '../api/getUsers';
-import { setUserInStore } from '../api/setUser';
+import { usersInterface } from '../../types/types';
+import { getUsers } from '../../api/getUsers';
+import { setUserInStore } from '../../api/setUser';
 
 export const Users =  ():JSX.Element => {
   interface RootState {

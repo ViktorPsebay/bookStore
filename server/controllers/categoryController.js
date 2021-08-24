@@ -1,4 +1,4 @@
-import { Book, Category } from '../models/models.js';
+import { Book, Category } from '../model/models.js';
 
 class CategoryController {
   async create(req, res) {

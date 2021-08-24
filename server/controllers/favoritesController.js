@@ -1,12 +1,11 @@
-import { Book, FavoriteBook as Favorite, User } from '../models/models.js';
+import { Book, FavoriteBook as Favorite, User } from '../model/models.js';
 
 class FavoriteController {
   async create(req, res) {
     try {
       const { userId, bookId} = req.body;
       const candidate = await Favorite.findAll({where:{userId}, attributes: ['bookId']});
-      // return res.status(200).json(candidate);
-
+     
       if (candidate.map(item => item.bookId).includes(bookId)) return res.status(200).json('Книга уже содержится в избранном');
       await Favorite.create({
         userId: userId || null,
@@ -19,9 +18,9 @@ class FavoriteController {
     }
   }
 
-    async getId(req, res) {
+  async getId(req, res) {
     try {
-      const { userId, bookId} = req.body;
+      const { userId, bookId } = req.body;
       const id = await Favorite.findOne({where:{userId, bookId}, attributes: ['id']});    
       res.status(200).json(id);
     }

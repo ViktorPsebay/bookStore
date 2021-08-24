@@ -1,7 +1,9 @@
 import React from 'react';
-import { SideBarStyle } from '../styledComponents/SideBarStyle';
 import { booksInterface } from '../types/types';
-import { Categories } from './Categories';
+import { Categories } from './Category';
+import { FilterByPrice } from './FilterByPrice';
+import { FilterByRating } from './FilterByRating';
+import styled, { css } from 'styled-components';
 
 interface SideBarProps {
   filter: (books: booksInterface[]) => void,
@@ -19,7 +21,22 @@ export const SideBar = ({filter}: SideBarProps): JSX.Element => {
           <li></li>
           <li></li>  
         </ul>  
-      </div>        
+      </div>
+      <FilterByPrice filter={filter} />
+      <FilterByRating filter={filter} />
     </SideBarStyle>
   );
 };
+
+const SideBarStyle = styled.ul`
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  ${props =>
+    props.children &&
+    css`
+     list-style-type: none; 
+    `};
+`;
+

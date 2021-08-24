@@ -1,12 +1,8 @@
 import Jwt from 'jsonwebtoken';
-import { secretKey } from '../config/config.js';
-import { User } from '../models/models.js';
+import { secretKey } from '../conf/config.js';
+import { User } from '../model/models.js';
 
 export const isAuthMiddleware = async (req, res, next) => {
-  if (req.method === 'OPTIONS') {
-    next();
-  }
-
   try {
     const token = req.headers.authorization.split(' ')[1];
     if (!token) {

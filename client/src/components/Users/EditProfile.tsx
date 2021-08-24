@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormEvent } from 'react';
-import { Form } from '../styledComponents/Form';
+import { Form } from '../../styledComponents/Form';
 import { useDispatch, useSelector } from 'react-redux';
-import { editUsers } from '../api/editUser';
-import { usersInterface } from '../types/types';
+import { editUsers } from '../../api/editUser';
+import { usersInterface } from '../../types/types';
 
 export const EditProfile =  ():JSX.Element => {
   const dispatch = useDispatch();

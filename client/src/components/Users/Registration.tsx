@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { authUser } from '../api/auth';
-import { postUsers } from '../api/postUser';
-import {  Form, Label } from '../styledComponents/Form';
+import { authUser } from '../../api/auth';
+import { postUsers } from '../../api/postUser';
+import {  Form, Label } from '../../styledComponents/Form';
 
 export const Registration =  ():JSX.Element => {
 

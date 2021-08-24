@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { addToFavorites } from '../api/addToFavorites';
-import { removeFromFavorites } from '../api/removeFromFavorites';
-import { StyledBook } from '../styledComponents/StyledBook';
-import { booksInterface, usersInterface } from '../types/types';
+import { addToFavorites } from '../../api/addToFavorites';
+import { removeFromFavorites } from '../../api/removeFromFavorites';
+import { booksInterface, usersInterface } from '../../types/types';
+import styled from 'styled-components';
 
 interface BookItemProps {
   book: booksInterface,
@@ -33,3 +33,9 @@ export const BookItem = ({book, isFavorite}: BookItemProps):JSX.Element => {
     </StyledBook>
   );
 };
+
+const StyledBook = styled.div`
+  width: 25%;
+  padding: 10px;
+  border: 1px solid grey;
+`;

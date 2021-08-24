@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { booksInterface, usersInterface } from '../types/types';
-import { setUserInStore } from '../api/setUser';
+import { useDispatch } from 'react-redux';
+import { booksInterface } from '../../types/types';
+import { setUserInStore } from '../../api/setUser';
+import { getBooks } from '../../api/getBooks';
 import { BooksList } from './BooksList';
-import { getFavorites } from '../api/getFavorites';
+import { SideBar } from '../SideBar';
 
-export const Favorites =  ():JSX.Element => {
+export const Books = ():JSX.Element => {
   const voidArrayOfBooks: booksInterface[] = [];
-  interface RootState {
-    authUser: usersInterface
-  }
-  const user = useSelector((state: RootState) => state.authUser);
 
   const [books, setBooks] = useState(voidArrayOfBooks);
   const dispatch = useDispatch();
 
   const loadBooks = async () => {
-    const promiseBooks = await getFavorites(user.id);
+    const promiseBooks = await getBooks();
     setBooks(promiseBooks);
+  };
+
+
+  const filterBooks = (books: booksInterface[]) => {
+    setBooks(books);
   };
 
 
@@ -32,7 +34,8 @@ export const Favorites =  ():JSX.Element => {
 
   return (
     <div style={{display: 'flex'}}>
-      <BooksList books={books} isFavorite={true}/>
+      <SideBar filter={filterBooks} />   
+      <BooksList books={books} />
     </div>
   );
 };

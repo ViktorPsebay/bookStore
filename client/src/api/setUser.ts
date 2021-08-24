@@ -6,7 +6,7 @@ import { setUser } from '../store/action';
 export const setUserInStore = (token: string) => {
   return async (dispatch: Dispatch<Action>): Promise<boolean> => {
     try {
-      const response = await instance('/users/check_token', {
+      const response = await instance('/users/token/check', {
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
           'authorization': token

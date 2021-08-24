@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormEvent } from 'react';
-import { authUser } from '../api/auth';
-import { Form } from '../styledComponents/Form';
+import { authUser } from '../../api/auth';
+import { Form } from '../../styledComponents/Form';
 
 export const Auth =  ():JSX.Element => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {

@@ -1,7 +1,7 @@
 import { createHmac } from 'crypto';
 import Jwt from 'jsonwebtoken';
-import { User } from '../models/models.js';
-import { salt, secretKey } from '../config/config.js';
+import { User } from '../model/models.js';
+import { salt, secretKey } from '../conf/config.js';
 
 const generateAccessToken = (id, email) => {
   const payload = {

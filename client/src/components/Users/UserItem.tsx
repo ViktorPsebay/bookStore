@@ -1,5 +1,5 @@
 import React from 'react';
-import { usersInterface } from '../types/types';
+import { usersInterface } from '../../types/types';
 
 interface UserItemProps {
   user: usersInterface,

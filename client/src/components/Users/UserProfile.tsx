@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../api/logout';
-import { VoidLink } from '../styledComponents/VoidLink';
-import { usersInterface } from '../types/types';
+import { logout } from '../../api/logout';
+import { VoidLink } from '../../styledComponents/VoidLink';
+import { usersInterface } from '../../types/types';
 
 export const UserProfile = ():JSX.Element => {
   interface RootState {

@@ -1,5 +1,7 @@
-import { Book, Category, Rating } from '../models/models.js';
-import { sequelize } from '../models/models.js';
+import { Book, Category, Rating } from '../model/models.js';
+import { sequelize } from '../model/models.js';
+import pkg from 'sequelize';
+const { Op } = pkg;
 
 class BookController {
   async create(req, res) {
@@ -72,7 +74,7 @@ class BookController {
     }
   }
 
-    async getBookByCategoryId(req, res) {
+  async getBookByCategoryId(req, res) {
     try {
       const { id } = req.params;
       const books = await Book.findAll({              
@@ -117,6 +119,28 @@ class BookController {
     }
   }
 
+  async getBooksByPrice(req, res) {
+    try {
+      const { price } = req.params;
+      const books = await Book.findAll({where: {price: {[Op.lte]: price}}});
+      res.status(200).json(books);
+    }
+    catch(e) {
+      console.log(e);
+    }
+  }
+
+  async getBooksByRating(req, res) {
+    try {
+      const { rate } = req.params;
+      const books = await Book.findAll({where: {rating: {[Op.gte]: rate}}});
+      res.status(200).json(books);
+    }
+    catch(e) {
+      console.log(e);
+    }
+  }
+
   async sortBooksbyCriterion(req, res) {
     try {
       const { criterion } = req.params;
@@ -142,10 +166,6 @@ class BookController {
   async updateBook(req, res) {
     try {
       const { id, title, author, price, description, intro, categoryId } = req.body;
-      // const hasRight = req.Book.email === email;
-      // if (!hasRight) {
-      //   return res.status(401).json({message: 'У вас нет прав доступа'});
-      // }
       console.log(title);
       console.log(author);
       console.log(price);
@@ -172,12 +192,6 @@ class BookController {
     
     try {
       const { id } = req.params;
-      
-      // const hasRight = req.Book.id === +id;
-      // if (!hasRight) {
-      //   return res.status(401).json({message: 'У вас нет прав доступа'});
-      // } 
-
       const books = await Book.destroy({ where:{id}});
       console.log(books);
       res.status(200).json({message: 'Книга была удалена'});

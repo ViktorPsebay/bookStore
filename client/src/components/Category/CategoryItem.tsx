@@ -1,6 +1,6 @@
 import React from 'react';
-import { getBooksByCategory } from '../api/getBooksByCategory';
-import { booksInterface, categoriesInterface } from '../types/types';
+import { getBooksByCategory } from '../../api/getBooksByCategory';
+import { booksInterface, categoriesInterface } from '../../types/types';
 
 interface CategoryItemProps {
   category: categoriesInterface,
@@ -14,7 +14,7 @@ export const CategoryItem = ({category, filter}: CategoryItemProps):JSX.Element 
   };
 
   return (
-    <li onClick={() => clickHandler(category.id)}>
+    <li onClick={() => clickHandler(category.id)} style={{cursor: 'pointer'}}>
       {category.nameOfCategory}
     </li>
   );

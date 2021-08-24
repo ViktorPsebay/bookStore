@@ -2,11 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { usersInterface } from '../types/types';
-import { NavBar } from '../styledComponents/NavBar';
 import { useState } from 'react';
-import { Modal } from './Modal';
+import { Modal } from './Users/Modal';
 import { modesOfLogin } from '../consts';
 import { VoidLink } from '../styledComponents/VoidLink';
+import styled, { css } from 'styled-components';
 
 export const Header = ():JSX.Element => {
 
@@ -66,3 +66,15 @@ export const Header = ():JSX.Element => {
     </nav>
   );
 };
+
+const NavBar = styled.ul`
+  width: 100%;
+  display: flex;
+  justify-content:space-around;
+  padding: 0;
+  ${props =>
+    props.children &&
+    css`
+     list-style-type: none; 
+    `};
+`;

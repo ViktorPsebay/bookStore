@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { booksInterface, categoriesInterface } from '../types/types';
-import { setUserInStore } from '../api/setUser';
+import { booksInterface, categoriesInterface } from '../../types/types';
+import { setUserInStore } from '../../api/setUser';
 import { CategoriesList } from './CategoriesList';
-import { getCategories } from '../api/getCategories';
+import { getCategories } from '../../api/getCategories';
 
 interface CategoriesProps {
   filter: (books: booksInterface[]) => void,
 }
 
 
-export const Categories =  ({filter}: CategoriesProps):JSX.Element => {
+export const Categories = ({filter}: CategoriesProps):JSX.Element => {
   const voidArrayOfCategories: categoriesInterface[] = [];
 
   const [categories, setCategories] = useState(voidArrayOfCategories);
