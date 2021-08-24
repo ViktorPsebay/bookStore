@@ -2,8 +2,6 @@ import Sequelize from 'sequelize';
 import { connection } from '../conf/config.js'; 
 
 export const sequelize = new Sequelize(connection);
-// const queryInterface = sequelize.getQueryInterface();
-// queryInterface.addColumn('user', 'AuthorId', { type: Sequelize.INTEGER });
 
 export const User = sequelize.define('user', {
   id: {

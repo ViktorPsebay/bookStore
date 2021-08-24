@@ -31,6 +31,8 @@ router.post('/users/login', userController.authorization);
 
 router.post('/books/', bookController.create);
 
+router.post('/books/upload', bookController.addImage);
+
 router.get('/books/', bookController.getAllBooks);
 
 router.get('/books/sort/:criterion', bookController.sortBooksbyCriterion);

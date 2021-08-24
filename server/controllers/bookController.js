@@ -12,7 +12,7 @@ class BookController {
         return res.status(400).json({message: 'Книга с таким названием уже существует'});
       }
 
-      await Book.create({
+      const book = await Book.create({
         title,
         author: author || null,
         price,
@@ -20,7 +20,7 @@ class BookController {
         intro: intro || null,
         categoryId: categoryId || null,
       });
-      res.status(200).json('Книга успешно добавлена');
+      res.status(200).json(book);
     }
     catch(e) {
       console.log(e);
@@ -141,9 +141,27 @@ class BookController {
     }
   }
 
+  async addImage(req, res) {
+    try {
+      req.file.filename = req.file.originalname;
+      const filedata = req.file;
+      console.log(filedata);
+
+      if(!filedata)
+        res.status(400).json('Ошибка при загрузке файла');
+      else
+        res.status(200).json('Файл загружен');
+    }
+    catch(e) {
+      console.log(e);
+    }
+  }
+
   async sortBooksbyCriterion(req, res) {
     try {
       const { criterion } = req.params;
+      if (criterion !== 'rating' && criterion !== 'price' && criterion !== 'title')
+        return res.status(400).json('указан неправильный критерий');
       const order = criterion === 'rating' ? 'DESC' : 'ASC';
 
       const books = await Book.findAll({include: {

@@ -96,7 +96,7 @@ class BookAuthorController {
       const { id } = req.params;
       const bookAuthors = await BookAuthor.destroy({ where:{id}});
       console.log(bookAuthors);
-      res.status(200).json({message: 'Книга была удалена из избранного'});
+      res.status(200).json({message: 'Книга была удалена из книг автора'});
     }
     catch(e) {
       console.log(e);

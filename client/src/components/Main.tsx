@@ -11,6 +11,7 @@ import { HomePage } from './HomePage';
 import { UserProfile } from './Users/UserProfile';
 import { Books } from './Books/';
 import { Favorites } from './Users/Favorites';
+import { AddBook } from './Users/AddBook';
 
 export const Main = ():JSX.Element => {
   return (
@@ -41,6 +42,10 @@ export const Main = ():JSX.Element => {
 
       <Route path="/favorites">
         <Favorites />
+      </Route>
+
+      <Route path="/add_book">
+        <AddBook />
       </Route>
 
       <ProtectedRoute path="/profile">

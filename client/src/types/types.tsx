@@ -10,11 +10,34 @@ export interface categoriesInterface{
   nameOfCategory: string,
 }
 
+export interface authorsInterface{
+  id: number,
+  name: string,
+}
+
+export interface bookAuthorInterface {
+  id?: number,
+  bookId: number,
+  authorId: number,
+}
 
 export interface booksInterface {
   id: number,
   title: string,  
   author?: string,
+  categoryId?: number,
+  price: number,
+  intro?: string,
+  rate?: number,
+  description?: string,
+  image?: string,
+}
+
+export interface booksRequestInterface {
+  id?: number,
+  title: string,  
+  author?: string,
+  categoryId?: number,
   price: number,
   intro?: string,
   rate?: number,

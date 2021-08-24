@@ -25,6 +25,9 @@ export const UserProfile = ():JSX.Element => {
           <Link to="/favorites">Избранное</Link>
         </li>
         <li>
+          <Link to="/add_book">Добавить книгу</Link>
+        </li>
+        <li>
           <VoidLink onClick={() => {logout();}}>Выйти</VoidLink>  
         </li>     
       </ul>
