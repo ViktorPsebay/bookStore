@@ -35,6 +35,8 @@ router.post('/books/upload', bookController.addImage);
 
 router.get('/books/', bookController.getAllBooks);
 
+router.get('/books/count/book', bookController.getCountOfBooks);
+
 router.get('/books/sort/:criterion', bookController.sortBooksbyCriterion);
 
 router.get('/books/:id', bookController.getOneBook);

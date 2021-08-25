@@ -11,3 +11,7 @@ export const modesOfLogin = {
   authorization: 'AUTHORIZATION',
   registration: 'REGISTRATION',
 };
+
+export const serverUrl = 'http://localhost:5000/';
+
+export const countBooksOnPage = 6;

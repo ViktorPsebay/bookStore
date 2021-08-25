@@ -3,12 +3,12 @@ import { booksInterface } from '../types/types';
 import { FormEvent } from 'react';
 import { getBooksByPrice } from '../api/getBooksByPrice';
 
-interface CategoriesProps {
+interface FilterByPriceProps {
   filter: (books: booksInterface[]) => void,
 }
 
 
-export const FilterByPrice = ({filter}: CategoriesProps):JSX.Element => {
+export const FilterByPrice = ({filter}: FilterByPriceProps):JSX.Element => {
   const formHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { price } = e.currentTarget;

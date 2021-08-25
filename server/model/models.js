@@ -58,7 +58,7 @@ export const Book = sequelize.define('book', {
   },
   image: {
     type: Sequelize.STRING,
-    allowNull: true
+    defaultValue: 'book_placeholder.png',
   },
   rating: {
     type: Sequelize.FLOAT,

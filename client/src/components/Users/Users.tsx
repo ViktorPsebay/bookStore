@@ -18,8 +18,6 @@ export const Users =  ():JSX.Element => {
  
   });
 
-  // const dispatch = useDispatch();
-
   const users = useSelector((state: RootState) => state.users);
 
   return (

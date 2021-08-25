@@ -49,7 +49,7 @@ class FavoriteController {
     try {
       const { id } = req.params;
       const favorites = await Favorite.findAll({ include: [
-        {model:Book, attributes: ['id', 'title', 'author', 'price']},
+        {model:Book, attributes: ['id', 'title', 'author', 'price', 'image']},
         {model: User, attributes: ['id', 'fullName', 'email'] }],
       attributes: ['id'],
       where:{userId: id}});

@@ -3,12 +3,12 @@ import { booksInterface } from '../types/types';
 import { FormEvent } from 'react';
 import { getBooksByRating } from '../api/getBooksByRating';
 
-interface CategoriesProps {
+interface FilterByRatingProps {
   filter: (books: booksInterface[]) => void,
 }
 
 
-export const FilterByRating = ({filter}: CategoriesProps):JSX.Element => {
+export const FilterByRating = ({filter}: FilterByRatingProps):JSX.Element => {
   const formHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { rate } = e.currentTarget;

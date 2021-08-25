@@ -4,6 +4,8 @@ import { Categories } from './Category';
 import { FilterByPrice } from './FilterByPrice';
 import { FilterByRating } from './FilterByRating';
 import styled, { css } from 'styled-components';
+import { Authors } from './Author/Authors';
+import { Sort } from './Sort';
 
 interface SideBarProps {
   filter: (books: booksInterface[]) => void,
@@ -14,16 +16,10 @@ export const SideBar = ({filter}: SideBarProps): JSX.Element => {
   return (
     <SideBarStyle>
       <Categories filter={filter}/>      
-      <div>
-      Автор
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>  
-        </ul>  
-      </div>
+      <Authors filter={filter}/>
       <FilterByPrice filter={filter} />
       <FilterByRating filter={filter} />
+      <Sort filter={filter}/>
     </SideBarStyle>
   );
 };

@@ -12,6 +12,7 @@ import { UserProfile } from './Users/UserProfile';
 import { Books } from './Books/';
 import { Favorites } from './Users/Favorites';
 import { AddBook } from './Users/AddBook';
+import { BookCard } from './Books/BookCard';
 
 export const Main = ():JSX.Element => {
   return (
@@ -30,6 +31,10 @@ export const Main = ():JSX.Element => {
 
       <Route path="/books">
         <Books />
+      </Route>
+
+      <Route path="/book_card/:id">
+        <BookCard />
       </Route>
 
       <Route path="/editing">

@@ -24,7 +24,7 @@ const __dirname = path.resolve();
 
 console.log(__dirname);
 
-app.use(express.static(__dirname + 'public'));
+app.use(express.static('public'));
 // app.use(multer({dest:'public/uploads'}).single('filedata'));
 app.use(multer({storage:storageConfig}).single('filedata'));
 app.use(cors());

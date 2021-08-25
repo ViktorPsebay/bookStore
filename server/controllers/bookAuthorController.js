@@ -33,7 +33,7 @@ class BookAuthorController {
     try {
       const { id } = req.params;
       const bookAuthors = await BookAuthor.findAll({ include: [
-        {model: Book, attributes: ['id', 'title', 'author']},
+        {model: Book, attributes: ['id', 'title', 'author', 'image', 'price']},
         {model: Author, attributes: ['id', 'name'] }],
       attributes: ['id'],
       where:{bookId: id}});
@@ -49,7 +49,7 @@ class BookAuthorController {
     try {
       const { id } = req.params;
       const bookAuthors = await BookAuthor.findAll({ include: [
-        {model: Book, attributes: ['id', 'title', 'author', 'price']},
+        {model: Book, attributes: ['id', 'title', 'author', 'price', 'image']},
         {model: Author, attributes: ['id', 'name'] }],
       attributes: ['id'],
       where:{authorId: id}});

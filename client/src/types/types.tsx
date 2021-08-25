@@ -28,9 +28,15 @@ export interface booksInterface {
   categoryId?: number,
   price: number,
   intro?: string,
-  rate?: number,
+  rating?: number,
   description?: string,
   image?: string,
+}
+
+export interface ratesInterface {
+  rate: number,
+  userId: number,
+  bookId: number,
 }
 
 export interface booksRequestInterface {
@@ -40,7 +46,7 @@ export interface booksRequestInterface {
   categoryId?: number,
   price: number,
   intro?: string,
-  rate?: number,
+  rating?: number,
   description?: string,
   image?: string,
 }

@@ -6,7 +6,7 @@ const { Op } = pkg;
 class BookController {
   async create(req, res) {
     try {
-      const {title, author, price, description, intro, categoryId} = req.body;
+      const {title, author, price, description, intro, categoryId, image} = req.body;
       const candidate = await Book.findOne({where: {title}});
       if (candidate) {
         return res.status(400).json({message: 'Книга с таким названием уже существует'});
@@ -19,6 +19,7 @@ class BookController {
         description: description || null, 
         intro: intro || null,
         categoryId: categoryId || null,
+        image: image || null,
       });
       res.status(200).json(book);
     }
@@ -34,7 +35,7 @@ class BookController {
         model: Category,
         attributes: ['id', 'nameOfCategory'],
       }, where:{author}, raw: true,
-      attributes: ['id', 'title', 'author', 'price', 'rating', 'description'] });
+      attributes: ['id', 'title', 'author', 'price', 'rating', 'description', 'image'] });
       console.log(books);
       res.status(200).json(books);
     }
@@ -50,7 +51,7 @@ class BookController {
         model: Category,
         attributes: ['id', 'nameOfCategory'],
       }, where:{title}, raw: true,
-      attributes: ['id', 'title', 'author', 'price', 'rating', 'description'] });
+      attributes: ['id', 'title', 'author', 'price', 'rating', 'description', 'image'] });
       console.log(books);
       res.status(200).json(books);
     }
@@ -78,7 +79,7 @@ class BookController {
     try {
       const { id } = req.params;
       const books = await Book.findAll({              
-        attributes: ['id', 'title', 'author', 'price', 'rating', 'description'],
+        attributes: ['id', 'title', 'author', 'price', 'rating', 'description', 'image'],
         where:{categoryId: id}, raw: true});
       res.status(200).json(books);
     }
@@ -95,7 +96,7 @@ class BookController {
         attributes: ['id', 'nameOfCategory'],
       },
       where:{id}, raw: true,
-      attributes: ['id', 'title', 'author', 'price', 'rating', 'description'] });
+      attributes: ['id', 'title', 'author', 'price', 'rating', 'description', 'image'] });
       console.log(book);
       res.status(200).json(book);
     }
@@ -104,15 +105,45 @@ class BookController {
     }
   }
 
+  // async getAllBooks(req, res) {
+  //   try {
+  //     let { limit, page } = req.query;
+  //     page = page || 1;
+  //     limit = limit || 6;
+  //     let offset = page * limit - limit;
+  //     const books = await Book.findAll({include: {
+  //       model: Category,
+  //       attributes: ['id', 'nameOfCategory'],
+  //     },
+  //     attributes: ['id', 'title', 'author', 'price', 'rating', 'description', 'image'],
+  //     limit, offset
+  //     });
+  //     res.status(200).json(books);
+  //   }
+  //   catch(e) {
+  //     console.log(e);
+  //   }
+  // }
+
   async getAllBooks(req, res) {
     try {
       const books = await Book.findAll({include: {
         model: Category,
         attributes: ['id', 'nameOfCategory'],
       },
-      attributes: ['id', 'title', 'author', 'price', 'rating', 'description']
+      attributes: ['id', 'title', 'author', 'price', 'rating', 'description', 'image'],
       });
       res.status(200).json(books);
+    }
+    catch(e) {
+      console.log(e);
+    }
+  }
+
+    async getCountOfBooks(req, res) {
+    try {
+      const count = await Book.count();
+      res.status(200).json(count);
     }
     catch(e) {
       console.log(e);

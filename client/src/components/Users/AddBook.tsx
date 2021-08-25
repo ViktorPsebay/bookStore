@@ -1,16 +1,14 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { authorsInterface, bookAuthorInterface, booksInterface, booksRequestInterface, categoriesInterface } from '../../types/types';
+import { useDispatch } from 'react-redux';
+import { authorsInterface, bookAuthorInterface, booksRequestInterface, categoriesInterface } from '../../types/types';
 import { setUserInStore } from '../../api/setUser';
-import { BooksList } from '../Books/BooksList';
-import { getFavorites } from '../../api/getFavorites';
 import { instance } from '../../api';
 import { getCategories } from '../../api/getCategories';
 import { getAuthors } from '../../api/getAuthors';
 import { postBook } from '../../api/postBook';
 import { postBookAuthor } from '../../api/postBookAuthor';
 
-export const AddBook = ():JSX.Element => {
+export const AddBook = (): JSX.Element => {
   const voidArrayOfCategories: categoriesInterface[] = [];
   const [categories, setCategories] = useState(voidArrayOfCategories);
 
@@ -39,32 +37,21 @@ export const AddBook = ():JSX.Element => {
  
   }, []);  
 
-  // const uploadHandler = async (e: FormEvent<HTMLInputElement>) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   const imagefile = e.currentTarget; 
-  //   const formData = new FormData();
-  //   if (imagefile.files === null) return;
-  //   formData.append('filedata', imagefile.files[0]);
-  //   const res = await instance.post('books/upload', formData);
-  //   console.log(res);
-  // };
-
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {titleOfBook, author, category, filedata, price} = e.currentTarget;
     const formData = new FormData();
-    if (filedata.files === null) return;
-    formData.append('filedata', filedata.files[0]);
+    if (filedata.files)
+      formData.append('filedata', filedata.files[0]);
     const currentCategory = categories.find(item => item.nameOfCategory === category[category.selectedIndex].value);
     const currentAuthor = authors.find(item => item.name === author[author.selectedIndex].value);
-    if (!currentAuthor) return;
+    if (!currentAuthor || !currentCategory) return;
     const book : booksRequestInterface = {
       title: titleOfBook.value,
-      author,
+      author: currentAuthor.name,
       price: price.value,
       categoryId: currentCategory?.id,
-      image: filedata.files[0].name,
+      image: filedata.files[0]?.name || null,
 
     };
     const bookId = await postBook(book);
@@ -73,6 +60,7 @@ export const AddBook = ():JSX.Element => {
       authorId: currentAuthor.id
     };
     postBookAuthor(bookAuthor);
+    if (!filedata.files[0]) return;
     const res = await instance.post('books/upload', formData);
     console.log(res);
 
@@ -86,9 +74,9 @@ export const AddBook = ():JSX.Element => {
   return (
     <form onSubmit={submitHandler}>
       <label>Название:</label><br />
-      <input type="text" name="titleOfBook" placeholder="название книги"/>
+      <input type="text" name="titleOfBook" placeholder="название книги"/><br />
       <label>Цена:</label><br />
-      <input type="number" name="price" /><br />
+      <input required type="number" name="price" /><br />
       <label>Автор:</label><br />
       <select name="author">
         {authors.map( author => (
@@ -103,8 +91,7 @@ export const AddBook = ():JSX.Element => {
       </select><br />
       <label>добавить обложку</label><br />
       <input type="file" name="filedata"/><br />
-      <input type="submit" value="Send" />  
-      {/* onChange={uploadHandler} */}
+      <input type="submit" value="Send" />
     </form>
   );
 };
