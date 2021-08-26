@@ -5,7 +5,7 @@ import { setUserInStore } from '../../api/setUser';
 import { getBooks } from '../../api/getBooks';
 import { BooksList } from './BooksList';
 import { SideBar } from '../SideBar';
-import { Pagination } from '../Pagination';
+import { Pagination } from './Pagination';
 import { getCountOfBooks } from '../../api/getCountOfBooks';
 import { countBooksOnPage } from '../../consts';
 

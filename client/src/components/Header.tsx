@@ -37,15 +37,15 @@ export const Header = ():JSX.Element => {
         <li>
           <Link to="/">Дом</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/users">Пользователи</Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/books">Книги</Link>
         </li>        
-        <li>
+        {/* <li>
           <Link to="/private">Приватная страница</Link>
-        </li>
+        </li> */}
         {isAuth ? (
           <li>
             <Link to="/profile"><img src='/image/avatar.webp' style={{width: '25px'}}/></Link>

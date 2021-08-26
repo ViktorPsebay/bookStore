@@ -9,8 +9,8 @@ class AuthorController {
         return res.status(400).json({message: 'Такой автор уже существует'});
       }
 
-      await Author.create({name});
-      res.status(200).json('Автор успешно добавлен');
+      const author = await Author.create({name});
+      res.status(200).json(author);
     }
     catch(e) {
       console.log(e);

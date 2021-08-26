@@ -5,7 +5,7 @@ import { FilterByPrice } from './FilterByPrice';
 import { FilterByRating } from './FilterByRating';
 import styled, { css } from 'styled-components';
 import { Authors } from './Author/Authors';
-import { Sort } from './Sort';
+import { Sort } from './Books/Sort';
 
 interface SideBarProps {
   filter: (books: booksInterface[]) => void,

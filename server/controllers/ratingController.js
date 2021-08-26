@@ -9,6 +9,10 @@ class RatingController {
         userId: userId || null,
         bookId: bookId || null,
       });
+      const candidate = await Rating.findOne({where:{bookId, userId}});
+      if (candidate) await Rating.update({
+        rate,
+      }, {where:{id: candidate.id}});
       res.status(200).json('Оценка успешно добавлена');
     }
     catch(e) {

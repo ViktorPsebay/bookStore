@@ -15,7 +15,7 @@ export const BooksList = ({books, isFavorite, page=1}: BooksListProps):JSX.Eleme
       {books?.
         filter((item, index) => (index < page * countBooksOnPage && index >= (page-1) * countBooksOnPage)).
         map(book => 
-          <BookItem key={book.id} book={book} isFavorite={isFavorite}/>)}
+          <BookItem key={book?.id} book={book} isFavorite={isFavorite}/>)}
     </div>
   );
 };

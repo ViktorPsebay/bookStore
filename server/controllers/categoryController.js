@@ -9,8 +9,8 @@ class CategoryController {
         return res.status(400).json({message: 'Категория с таким названием уже существует'});
       }
 
-      await Category.create({nameOfCategory});
-      res.status(200).json('Категория успешно добавлена');
+      const category = await Category.create({nameOfCategory});
+      res.status(200).json(category);
     }
     catch(e) {
       console.log(e);

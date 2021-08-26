@@ -6,10 +6,11 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { getOneBookById } from '../../api/getOneBookById';
 import { serverUrl } from '../../consts';
-import { Review } from './Review';
-import { useRadioGroup } from '@material-ui/core';
+import { AddingReview } from './AddingReview';
 import { postRate } from '../../api/postRate';
 import { getRatingForBook } from '../../api/getRatingForBook copy';
+import { BlockOfReview } from './BlockOfReview';
+import { Box } from '@material-ui/core';
 
 export const BookCard = ():JSX.Element => {
   const { id }: {id: string} = useParams();
@@ -25,8 +26,9 @@ export const BookCard = ():JSX.Element => {
     title: '',
     price: 0,    
   };
-  const [book, setBook] = useState(voidBook);
 
+  const [book, setBook] = useState(voidBook);
+  
   const loadBook = async () => {
     const promiseBooks = await getOneBookById(+id);
     setBook(promiseBooks);
@@ -38,7 +40,7 @@ export const BookCard = ():JSX.Element => {
     dispatch(setUserInStore(token));
 
     loadBook();
- 
+
   }, []);
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -56,34 +58,41 @@ export const BookCard = ():JSX.Element => {
   return (
     <div>
       <StyledBook>
-        <h3>{book.author}</h3>
-        <h4>{book.title}</h4>
-        <h5>{book.price}</h5>
-        <h5>{book.rating || 0}<img src='/image/star.png' style={{width: '15px'}}/></h5>
-        <p>{book.description || null}</p>
         <Image src={`${serverUrl}/uploads/${book.image || 'book_placeholder.png'}`} />
-        <form onSubmit={submitHandler}>
-          <select name="rate">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select><br />
-          <input type="submit" value="Оценить" />
-        </form>
+        <Box>
+          <h2>{book.author}</h2>
+          <h1>{book.title}</h1>
+          <h3>{book.price}</h3>
+          <h3>{book.rating || 0}<img src='/image/star.png' style={{width: '15px'}}/></h3>
+          <p>{book.description || null}</p>
+       
+          <form onSubmit={submitHandler}>
+            <select name="rate">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select><br />
+            <input type="submit" value="Оценить" />
+          </form>
+        </Box>
+        
       </StyledBook>
-      <Review />
+      <AddingReview bookId={+id} userId={user?.id || null}/>
+      <BlockOfReview id={+id}/>
     </div>    
   );
 };
 
 const StyledBook = styled.div`
-  width: 25%;
+  display: flex;
+  width: 100%;
   padding: 10px;
-  border: 1px solid grey;
+  /* border: 1px solid grey; */
 `;
 
 const Image = styled.img`
-  max-width: 95%;
+  width: 40vw;
+  padding: 40px;
 `;

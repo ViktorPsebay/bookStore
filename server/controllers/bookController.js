@@ -203,7 +203,7 @@ class BookController {
         [`${criterion}`, `${order} NULLS LAST`],
         ['id', 'ASC'],
       ],
-      attributes: ['id', 'title', 'author', 'price', 'rating', 'description']
+      attributes: ['id', 'title', 'author', 'price', 'rating', 'description', 'image']
       });
       res.status(200).json(books);
     }

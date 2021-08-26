@@ -39,6 +39,20 @@ export interface ratesInterface {
   bookId: number,
 }
 
+export interface reviewInterface {
+  bookId: number,
+  userId: number | null,
+  textOfReview?: string,
+  id?: number,
+}
+
+// export interface reviewResponseInterface {
+//   id: number,
+//   textOfReview?: string,
+//   book: booksInterface,
+//   user: usersInterface,
+// }
+
 export interface booksRequestInterface {
   id?: number,
   title: string,  

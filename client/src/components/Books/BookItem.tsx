@@ -30,25 +30,32 @@ export const BookItem = ({book, isFavorite}: BookItemProps):JSX.Element => {
   };
 
   return (
-    <StyledBook onClick={() => history.push(`/book_card/${book.id}`)}>
-      <h3>{book.author}</h3>
-      <h4>{book.title}</h4>
-      <h5>{book.price}</h5>
-      <h5>{book.rating || 0}<img src='image/star.png' style={{width: '15px'}}/></h5>
-      <p>{book.description || null}</p>
-      <Image src={`${serverUrl}/uploads/${book.image || 'book_placeholder.png'}`} />
-      {isFavorite ? 
-        <Button variant="contained" color="primary" onClick={removingHandler}>удалить из избранного</Button> 
-        :
-        <Button variant="contained" color="primary" onClick={addingHandler}>В избранное</Button>}
-    </StyledBook>
+    <div style={{width: '30%'}}>
+      { book ? 
+        (<StyledBook onClick={() => history.push(`/book_card/${book.id}`)}>
+          <h3>{book.author || null}</h3>
+          <h4>{book.title}</h4>
+          <h5>{book.price || null}</h5>
+          <h5>{book.rating || 0}<img src='image/star.png' style={{width: '15px'}}/></h5>
+          <p>{book.description || null}</p>
+          <Image src={`${serverUrl}/uploads/${book.image || 'book_placeholder.png'}`} />
+          {isFavorite ? 
+            <Button variant="contained" color="primary" onClick={removingHandler}>удалить из избранного</Button> 
+            :
+            <Button variant="contained" color="primary" onClick={addingHandler}>В избранное</Button>}
+        </StyledBook>) : (<h1>Нет подходящих книг</h1>)
+    
+      }
+     
+    </div>
+    
   );
 };
 
 const StyledBook = styled.div`
-  width: 25%;
+  width: 90%;
   padding: 10px;
-  border: 1px solid grey;
+  /* border: 1px solid grey; */
 `;
 
 const Image = styled.img`

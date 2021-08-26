@@ -1,7 +1,7 @@
 import React from 'react';
-import { booksInterface } from '../types/types';
+import { booksInterface } from '../../types/types';
 import { FormEvent } from 'react';
-import { sortBooks } from '../api/sortBooks';
+import { sortBooks } from '../../api/sortBooks';
 
 interface FilterByRatingProps {
   filter: (books: booksInterface[]) => void,
@@ -9,13 +9,6 @@ interface FilterByRatingProps {
 
 
 export const Sort = ({filter}: FilterByRatingProps):JSX.Element => {
-  // const sortHandler = async (e: FormEvent<HTMLSelectElement>) => {
-  //   e.preventDefault();
-  //   const { value } = e.currentTarget;
-  //   const books = await sortBooks(value);
-  //   filter(books);
-  // };
-
   const sortHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { sorting } = e.currentTarget;
