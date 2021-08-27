@@ -32,7 +32,7 @@ export const Header = ():JSX.Element => {
 
   const isAuth = useSelector((state: RootState) => state.authUser);
   return (
-    <nav>
+    <nav style={{backgroundColor: 'lightblue'}}>
       <NavBar>
         <li>
           <Link to="/">Дом</Link>
@@ -48,7 +48,7 @@ export const Header = ():JSX.Element => {
         </li> */}
         {isAuth ? (
           <li>
-            <Link to="/profile"><img src='/image/avatar.webp' style={{width: '25px'}}/></Link>
+            <Link to="/favorites"><img src='/image/avatar.webp' style={{width: '25px'}}/></Link>
           </li>
         ) : (
           <div>

@@ -1,3 +1,4 @@
+import { Button, TextField } from '@material-ui/core';
 import React from 'react';
 import { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
@@ -24,7 +25,7 @@ export const Registration =  ():JSX.Element => {
       fullName: userName.value,
       email: email.value,
       password: password.value,
-      birthday: birthday.value,
+      birthday: birthday.value || null,
     };
     
     dispatch(postUsers(user));
@@ -35,7 +36,52 @@ export const Registration =  ():JSX.Element => {
     <div>
       <Form action="" onSubmit={handleSubmit}>
         <h3>Регистрация</h3>
-        <Label>Имя:</Label>
+        <TextField 
+          size='small'
+          variant='outlined' 
+          required
+          type="text"
+          name="userName" 
+          label="Имя"
+        /><br /><br />
+
+        <TextField 
+          size='small'
+          variant='outlined' 
+          required
+          type="email"
+          name="email" 
+          label="email"
+        /><br /><br />
+
+        <TextField
+          size='small'
+          variant='outlined'
+          required
+          type="password"
+          name="password"          
+          label="пароль"
+        /><br /><br />
+
+        <TextField
+          size='small'
+          variant='outlined'
+          required
+          type="password"
+          name="againPassword"          
+          label="Повторите пароль"
+        /><br /><br />
+
+        <Label>Укажите дату рождения:</Label>
+        <TextField
+          size='small'
+          variant='outlined'
+          type="date"
+          required
+          name="birthday"
+        /><br /><div className='label' style={{height: '10px', color: 'red'}}></div><br />
+        
+        {/* <Label>Имя:</Label>
         <input type="text" name="userName" placeholder="Введите ваше имя"/>
         <Label>email:</Label>
         <input type="email" name="email" placeholder="Введите ваш email"/>
@@ -44,8 +90,8 @@ export const Registration =  ():JSX.Element => {
         <Label>Повторите пароль:</Label>
         <input type="password" name="againPassword" placeholder="Повторите пароль"/>
         <Label>Укажите дату рождения:</Label>
-        <input type="date" name="birthday" placeholder="Введите дату рождения"/>
-        <button style={{marginTop: '20px'}}>Зарегистрироваться</button>
+        <input type="date" name="birthday" placeholder="Введите дату рождения"/> */}
+        <Button type='submit' variant="contained" color="secondary" style={{marginTop: '20px'}}>Зарегистрироваться</Button>
       </Form>
     </div>
   );

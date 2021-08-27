@@ -2,6 +2,7 @@ import React from 'react';
 import { booksInterface } from '../types/types';
 import { FormEvent } from 'react';
 import { getBooksByPrice } from '../api/getBooksByPrice';
+import styled from 'styled-components';
 
 interface FilterByPriceProps {
   filter: (books: booksInterface[]) => void,
@@ -19,9 +20,13 @@ export const FilterByPrice = ({filter}: FilterByPriceProps):JSX.Element => {
 
   return (
     <form action="" onSubmit={formHandler}>
-      <label htmlFor="">Цена до:</label>
-      <input type="number" name="price" />
+      <label htmlFor="">Цена до:</label><br />
+      <Input type="number" name="price" />
       <button>Найти</button>  
     </form>     
   );
 };
+
+const Input = styled.input`
+  max-width: 100%;
+`;

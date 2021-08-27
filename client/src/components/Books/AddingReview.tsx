@@ -7,6 +7,7 @@ import { postReview } from '../../api/postReview';
 export const AddingReview = ({bookId, userId}: reviewInterface): JSX.Element => {
   const addingHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!userId) return alert('Вы не авторизованы');
     const { textOfReview } = e.currentTarget;
     const review: reviewInterface = {
       bookId,
@@ -25,6 +26,7 @@ export const AddingReview = ({bookId, userId}: reviewInterface): JSX.Element => 
 };
 
 const AreaForReview = styled.textarea`
-  width: 90vw;
+  width: 95vw;
+  padding-left: 3%;
   height: 200px;
 `;

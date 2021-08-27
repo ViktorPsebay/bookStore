@@ -29,6 +29,7 @@ const StyledModal = styled.div`
   align-items: center;
   justify-content:space-around;
   opacity: 1;
+  z-index:1000;
 `;
 
 const PopUp = styled.div`

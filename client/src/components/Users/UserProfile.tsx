@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box, List, ListItem } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -28,23 +28,23 @@ export const UserProfile = ():JSX.Element => {
       {(user !== null) ?
         (<div>
           <h1>Hello, {user.fullName}</h1>
-          <ul>
-            <li>
-              <Link to="/editing">Редактирование</Link>
-            </li>
-            <li>
-              <Link to="/deleting">Удаление</Link>
-            </li>
-            <li>
+          <List style={{marginLeft: 0, paddingLeft: 0}}>
+            <ListItem>
+              <Link to="/editing">Редактировать профиль</Link>
+            </ListItem>
+            <ListItem>
+              <Link to="/deleting">Удалить профиль</Link>
+            </ListItem>
+            {/* <Li>
               <Link to="/favorites">Избранное</Link>
-            </li>
-            <li>
+            </Li> */}
+            <ListItem>
               <Link to="/add_book">Добавить книгу</Link>
-            </li>
-            <li>
+            </ListItem>
+            <ListItem>
               <VoidLink onClick={() => {logout();}}>Выйти</VoidLink>  
-            </li>     
-          </ul>
+            </ListItem>     
+          </List>
         </div>) : (<Box></Box>)}    
       
     </Box>
@@ -54,4 +54,10 @@ export const UserProfile = ():JSX.Element => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const Li = styled.li`
+  list-style-type: circle;
+  padding: 20px 0;
+
 `;

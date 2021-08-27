@@ -1,9 +1,10 @@
 import React from 'react';
 import { FormEvent } from 'react';
-import { Form } from '../../styledComponents/Form';
 import { useDispatch, useSelector } from 'react-redux';
 import { editUsers } from '../../api/editUser';
 import { usersInterface } from '../../types/types';
+import styled from 'styled-components';
+import { Box, TextField } from '@material-ui/core';
 
 export const EditProfile =  ():JSX.Element => {
   const dispatch = useDispatch();
@@ -11,16 +12,15 @@ export const EditProfile =  ():JSX.Element => {
   interface RootState {
     authUser: usersInterface,
   }  
-  const id = useSelector((state: RootState) => state.authUser.id) || 0;  
+  const authUser = useSelector((state: RootState) => state.authUser) || 0;  
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    const {userName, password, email, birthday} = e.currentTarget;  
+    const {userName, email, birthday} = e.currentTarget;  
     const user = {
-      id,
+      id: authUser.id,
       fullName: userName.value,
       email: email.value,
-      password: password.value,
       birthday: birthday.value,
     };
     
@@ -29,15 +29,63 @@ export const EditProfile =  ():JSX.Element => {
   };
 
   return (
-    <div>
-      <Form action="" onSubmit={handleSubmit}>
-        <label className="label">Заполните форму</label>
-        <input type="text" name="userName" placeholder="Введите ваше имя"/>
-        <input type="email" name="email" placeholder="Введите ваш email"/>
-        <input type="password" name="password" placeholder="Введите ваш пароль"/>
-        <input type="date" name="birthday" placeholder="Введите дату рождения"/>
-        <button>Редактировать</button>
+    <Box>
+      <PageTitle>Редактировать профиль</PageTitle>
+      <Form onSubmit={handleSubmit}>
+       
+        <TextField 
+          size='small'
+          variant='outlined' 
+          required
+          type="text"
+          name="userName" 
+          defaultValue={authUser.fullName}
+          label="Имя"
+        /><br /><br />
+       
+        <TextField
+          size='small'
+          variant='outlined'
+          required 
+          type="email" 
+          name="email"
+          defaultValue={authUser.email}
+          label="email"
+        /><br /><br />
+        
+        <TextField
+          size='small'
+          variant='outlined'
+          required
+          type="date"
+          name="birthday"
+          defaultValue={authUser.birthday?.toString()}
+          label="дата рождения"
+        /><br /><br />
+        
+        <br /><Button type="submit" value="Изменить" />
       </Form>
-    </div>
+    </Box>
+  
   );
 };
+
+const Button = styled.input`
+width: 106px;
+height: 30px;
+border: solid 1px lightgrey;
+border-radius: 5px;
+margin: 40px;
+color: #fff;
+background-color: #3f51b5;
+`;
+
+const Form = styled.form`
+padding: 70px 40vw;
+`;
+
+const PageTitle = styled.h1`
+font-family: 'Roboto';
+text-align: center;
+padding: 20px;
+`;

@@ -14,6 +14,7 @@ export const postUsers = (user: {
       const response = await instance.post('/users/registration', user);
       
       console.log(response.data);
+      if(response.status !== 200) return alert(response.data.message);
       const users = [{ 
         id: response.data.id, 
         fullName: response.data.fullName, 
@@ -21,11 +22,12 @@ export const postUsers = (user: {
         birthday: response.data.birthday
       }];
 
-      console.log(users);
+      console.log(users);   
 
       dispatch(addUsers(users));
     } catch(e) {
       console.log(e);
+      return alert(e.response.data.message);
     }
   };
 };

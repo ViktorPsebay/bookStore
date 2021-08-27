@@ -35,7 +35,7 @@ class UserController {
         fullName,
         password: hashPassword,
         email: emailNormalize,
-        birthday,
+        birthday: birthday || null,
       });
       res.status(200).json('Пользователь успешно добавлен');
     }
@@ -71,14 +71,14 @@ class UserController {
 
   async updateUser(req, res) {
     try {
-      const { fullName, password, birthday, email } = req.body;
+      const { fullName, birthday, email } = req.body;
       const hasRight = req.user.email === email;
       if (!hasRight) {
         return res.status(401).json({message: 'У вас нет прав доступа'});
       }
 
-      const hashPassword = createHmac('sha256', salt).update(password).digest('hex');
-      const user = await User.update( {fullName, password: hashPassword, birthday, email}, 
+      // const hashPassword = createHmac('sha256', salt).update(password).digest('hex');
+      const user = await User.update( {fullName, birthday, email}, 
         {where:{email}});
       res.status(200).json(user);
     }
@@ -158,7 +158,7 @@ class UserController {
   async checkToken(req, res) {
     try {
       if (req.user) return res.status(200).json(req.user); 
-      return res.status(201).json({message: 'неавторизованный пользователь'});
+      return res.status(400).json({message: 'неавторизованный пользователь'});
     }
     catch(e) {
       console.log(e);

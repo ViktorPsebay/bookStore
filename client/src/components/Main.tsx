@@ -4,9 +4,8 @@ import { Auth } from './Users/Auth';
 import { EditProfile } from './Users/EditProfile';
 import { DeleteProfile } from './Users/DeleteProfile';
 import { Registration } from './Users/Registration';
-import { Users } from './Users/Users';
+// import { Users } from './Users/Users';
 import { ProtectedRoute } from './ProtectedRoute';
-import { ProtectedPage } from './ProtectedPage';
 import { HomePage } from './HomePage';
 import { UserProfile } from './Users/UserProfile';
 import { Books } from './Books/';
@@ -25,9 +24,9 @@ export const Main = ():JSX.Element => {
         <Auth />
       </Route>
 
-      <Route path="/users">
+      {/* <Route path="/users">
         <Users />
-      </Route>
+      </Route> */}
 
       <Route path="/books">
         <Books />
@@ -37,21 +36,21 @@ export const Main = ():JSX.Element => {
         <BookCard />
       </Route>
 
-      <Route path="/editing">
+      <ProtectedRoute path="/editing">
         <EditProfile />
-      </Route>
+      </ProtectedRoute>
 
-      <Route path="/deleting">
+      <ProtectedRoute path="/deleting">
         <DeleteProfile />
-      </Route>
+      </ProtectedRoute>
 
-      <Route path="/favorites">
+      <ProtectedRoute path="/favorites">
         <Favorites />
-      </Route>
+      </ProtectedRoute>
 
-      <Route path="/add_book">
+      <ProtectedRoute path="/add_book">
         <AddBook />
-      </Route>
+      </ProtectedRoute>
 
       <ProtectedRoute path="/profile">
         <UserProfile />
@@ -61,10 +60,6 @@ export const Main = ():JSX.Element => {
         <HomePage />
       </Route>
       
-      <ProtectedRoute path="/private">
-        <ProtectedPage />
-      </ProtectedRoute>
-
       <Redirect to="/"></Redirect>     
     </Switch>
   );

@@ -8,10 +8,9 @@ export const checkToken = async (token: string): Promise<boolean> => {
         'Content-Type': 'application/json;charset=utf-8',
         'authorization': token
       }
-    });
-      
-    const user = response.data;
-    if (user) return true;
+    });      
+    
+    if (response.status === 200) return true;
     return false;
   } catch(e) {
     console.log(e);

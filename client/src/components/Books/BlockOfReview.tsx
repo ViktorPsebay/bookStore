@@ -28,7 +28,7 @@ export const BlockOfReview = ({id} :{id: number}): JSX.Element => {
      
       <ul>
         {reviews.map(review => 
-          <li key={review.id}>{review.textOfReview}</li>)}
+          <Li key={review.id}>{review.textOfReview}</Li>)}
       </ul>
     </BoxForReview>
   );
@@ -38,4 +38,10 @@ const BoxForReview = styled.div`
   width: 100vw;
   /* height: 200px; */
   /* display: flex; */
+`;
+
+const Li = styled.li`
+  max-width: 90%;
+  word-wrap:break-word;
+  list-style-type: decimal;
 `;

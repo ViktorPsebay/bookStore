@@ -1,3 +1,4 @@
+import { Button, TextField } from '@material-ui/core';
 import React from 'react';
 import { FormEvent } from 'react';
 import { authUser } from '../../api/auth';
@@ -19,11 +20,25 @@ export const Auth =  ():JSX.Element => {
     <div>
       <Form action="" onSubmit={handleSubmit}>
         <h3 className="label">Авторизация</h3>
-        <label>email:</label>
-        <input type="email" name="email" placeholder="Введите ваш email"/>
-        <label>пароль:</label>
-        <input type="password" name="password" placeholder="Введите ваш пароль"/>
-        <button style={{marginTop: '20px'}}>Войти</button>
+        <TextField 
+          size='small'
+          variant='outlined' 
+          required
+          type="email"
+          name="email" 
+          label="email"
+        /><br /><br />
+
+        <TextField
+          size='small'
+          variant='outlined'
+          required
+          type="password"
+          name="password"          
+          label="пароль"
+        /><br /><br />
+        
+        <Button type='submit' variant="contained" color="secondary" style={{marginTop: '20px'}}>Войти</Button>
       </Form>
     </div>
   );

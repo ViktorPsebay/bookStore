@@ -53,6 +53,7 @@ export const BookCard = ():JSX.Element => {
     };
     await postRate(rating);
     await getRatingForBook(id);
+    loadBook();
   };
 
   return (
@@ -93,6 +94,6 @@ const StyledBook = styled.div`
 `;
 
 const Image = styled.img`
-  width: 40vw;
-  padding: 40px;
+  width: 20vw;
+  padding: 30px 100px;
 `;

@@ -1,5 +1,9 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+
+import { Box, InputLabel, TextField } from '@material-ui/core';
+
 import { authorsInterface, bookAuthorInterface, booksRequestInterface, categoriesInterface } from '../../types/types';
 import { setUserInStore } from '../../api/setUser';
 import { instance } from '../../api';
@@ -7,10 +11,8 @@ import { getCategories } from '../../api/getCategories';
 import { getAuthors } from '../../api/getAuthors';
 import { postBook } from '../../api/postBook';
 import { postBookAuthor } from '../../api/postBookAuthor';
-import { Box, InputLabel, TextField } from '@material-ui/core';
 import { postCategory } from '../../api/postCategory';
 import { postAuthor } from '../../api/postAuthor';
-import styled from 'styled-components';
 
 export const AddBook = (): JSX.Element => {
   const voidArrayOfCategories: categoriesInterface[] = [];
@@ -57,13 +59,11 @@ export const AddBook = (): JSX.Element => {
     setCategory(value);
   };
 
-
-
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {titleOfBook, filedata, price} = e.currentTarget;
     const formData = new FormData();
-    filedata.name = Math.random().toString();
+    // filedata.name = Math.random().toString();
     if (filedata.files)
       formData.append('filedata', filedata.files[0]);
     const currentCategory = categories.find(item => item.nameOfCategory === category);
@@ -107,11 +107,22 @@ export const AddBook = (): JSX.Element => {
       <Form onSubmit={submitHandler}>
         
      
-        <TextField size='small' variant='outlined' required type="text" name="titleOfBook" label="название книги"/><br /><br />
+        <TextField
+          size='small'
+          variant='outlined'
+          required type="text"
+          name="titleOfBook"
+          label="название книги"
+        />
+        
+        <br />
+        <br />
         <TextField size='small' variant='outlined' required type="number" name="price" label="Цена"/><br /><br />
     
         <InputLabel id="labelAuthor">Автор</InputLabel>
+
         <Input type="text" list="authors" id="chosenAuthor" name="chosenAuthor" onChange={handleChangeAuthor}/>
+
         <datalist id="authors">
           {authors.map( author => (
             <option key={author.id} value={author.name}>{author.name}</option>
@@ -153,16 +164,11 @@ const Button = styled.input`
 `;
 
 const Form = styled.form`
- 
-padding: 70px 40vw;
-/*   
-  justify-content:  */
+  padding: 70px 40vw;
 `;
 
 const PageTitle = styled.h1`
   font-family: 'Roboto';
   text-align: center;
   padding: 20px;
-  /* color: #3f51b5; */
-  /* background-color: #3f51b5 */
 `;

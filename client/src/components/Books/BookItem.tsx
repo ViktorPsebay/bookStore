@@ -7,13 +7,13 @@ import styled from 'styled-components';
 import { serverUrl } from '../../consts';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-
 interface BookItemProps {
   book: booksInterface,
   isFavorite?: boolean,
+  filter?: () => void,
 }
 
-export const BookItem = ({book, isFavorite}: BookItemProps):JSX.Element => {
+export const BookItem = ({filter, book, isFavorite}: BookItemProps):JSX.Element => {
   interface RootState {
     authUser: usersInterface
   }
@@ -21,28 +21,46 @@ export const BookItem = ({book, isFavorite}: BookItemProps):JSX.Element => {
 
   const history = useHistory();
  
-  const addingHandler = () => {
-    addToFavorites({userId: user.id, bookId: book.id});
+  const addingHandler = async () => {
+    if (!user) return alert('Вы не авторизованы');
+    await addToFavorites({userId: user.id, bookId: book.id});
   };
 
-  const removingHandler = () => {
-    removeFromFavorites({userId: user.id, bookId: book.id});
+  const removingHandler = async () => {
+    await removeFromFavorites({userId: user.id, bookId: book.id});
+    if (filter) filter();
   };
 
   return (
-    <div style={{width: '30%'}}>
+    <div style={{display: 'flex',}}>
       { book ? 
         (<StyledBook onClick={() => history.push(`/book_card/${book.id}`)}>
-          <h3>{book.author || null}</h3>
-          <h4>{book.title}</h4>
-          <h5>{book.price || null}</h5>
-          <h5>{book.rating || 0}<img src='image/star.png' style={{width: '15px'}}/></h5>
-          <p>{book.description || null}</p>
-          <Image src={`${serverUrl}/uploads/${book.image || 'book_placeholder.png'}`} />
+          <Container>
+            <Image src={`${serverUrl}/uploads/${book.image || 'book_placeholder.png'}`} /><br />
+          </Container>
+          <Description>
+            <Inscription>
+              <h3 style={{margin:'0', color: 'gray'}}>{book.author || null}</h3>
+            </Inscription>
+            <Inscription>
+              <div style={{margin:'0', fontStyle: 'italic', maxHeight: '100%', overflow: 'hidden'}}>{book.title}</div>
+            </Inscription>
+            <Inscription>
+              <h4 style={{margin:'0', color: 'green'}}>{book.price || null} p.</h4>
+            </Inscription>
+            <Inscription>
+              <h4 style={{margin:'0'}}>{book.rating || 0}<img src='image/star.png' style={{width: '15px'}}/></h4>
+            </Inscription>
+            
+           
+            
+            
+            {/* <p>{book.description || null}</p> */}
+          </Description>
           {isFavorite ? 
-            <Button variant="contained" color="primary" onClick={removingHandler}>удалить из избранного</Button> 
+            <Button variant="contained" color="primary" onClick={(e) => {e.stopPropagation(); removingHandler();}}>удалить из избранного</Button> 
             :
-            <Button variant="contained" color="primary" onClick={addingHandler}>В избранное</Button>}
+            <Button variant="contained" color="primary" onClick={(e) => {e.stopPropagation(); addingHandler();}}>В избранное</Button>}
         </StyledBook>) : (<h1>Нет подходящих книг</h1>)
     
       }
@@ -59,5 +77,27 @@ const StyledBook = styled.div`
 `;
 
 const Image = styled.img`
-  max-width: 95%;
+  width: 90%;
+  max-height:90%;
+
+`;
+
+const Container = styled.div`
+  height: 320px;
+  width: 280px;
+  display: flex;
+`;
+
+const Description = styled.div`
+  height: 150px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* padding: 20px 5px; */
+`;
+
+const Inscription = styled.div`
+  height: 25%;
+  width: 100%;
 `;

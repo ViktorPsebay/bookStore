@@ -21,24 +21,17 @@ export const Favorites =  ():JSX.Element => {
     setPage(page);
   };
 
-  const [books, setBooks] = useState(voidArrayOfBooks);
-  // const dispatch = useDispatch();
+  const removingFromFavorites = () => {
+    loadBooks();
+  };
 
+  const [books, setBooks] = useState(voidArrayOfBooks);
+  
   const loadBooks = async () => {
     if (!user) return;
     const promiseBooks = await getFavorites(user.id);
     setBooks(promiseBooks);
   };
-
-
-  // useEffect(() => {
-  //   const token = 'Bearer ' + localStorage.getItem('userToken');
-
-  //   dispatch(setUserInStore(token));
-
-  //   loadBooks();
- 
-  // }, []);  
 
   useEffect(() => {
     loadBooks();
@@ -47,15 +40,28 @@ export const Favorites =  ():JSX.Element => {
 
   return (
     <div style={{display: 'flex'}}>
-      <div style={{padding: '0 50px'}}>
+      <Container>
         <UserProfile />
-      </div>
-      
-      <div style={{display: 'flex', flexDirection: 'column'}}>      
+      </Container>
+      {!books.length ? 
+        <h2>Пока в избранном ничего нет</h2> :
+        (
+          <div style={{display: 'flex', flexDirection: 'column', width: '85%'}}>      
+            <BooksList books={books} isFavorite={true} page={page} filter={removingFromFavorites}/>
+            <Pagination page={Math.ceil(books.length / countBooksOnPage)} choose={choosePage} />
+          </div>
+        )}
+      {/* <div style={{display: 'flex', flexDirection: 'column', width: '85%'}}>      
         <BooksList books={books} isFavorite={true} page={page}/>
         <Pagination page={Math.ceil(books.length / countBooksOnPage)} choose={choosePage} />
-      </div>
+      </div> */}
     </div>
   );
 };
 
+const Container = styled.div`
+  padding: 0 20px;
+  background-color: lightgrey;
+  width: 15%;
+  min-height:100vh;
+`;

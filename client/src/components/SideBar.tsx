@@ -25,7 +25,10 @@ export const SideBar = ({filter}: SideBarProps): JSX.Element => {
 };
 
 const SideBarStyle = styled.ul`
-  max-width: 200px;
+  width: 15%;
+  margin:0;
+  min-height: 100vh;
+  background-color: lightsteelblue;
   display: flex;
   flex-direction: column;
   padding: 15px;
