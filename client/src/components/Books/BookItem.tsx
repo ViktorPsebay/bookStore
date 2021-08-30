@@ -52,10 +52,6 @@ export const BookItem = ({filter, book, isFavorite}: BookItemProps):JSX.Element 
               <h4 style={{margin:'0'}}>{book.rating || 0}<img src='image/star.png' style={{width: '15px'}}/></h4>
             </Inscription>
             
-           
-            
-            
-            {/* <p>{book.description || null}</p> */}
           </Description>
           {isFavorite ? 
             <Button variant="contained" color="primary" onClick={(e) => {e.stopPropagation(); removingHandler();}}>удалить из избранного</Button> 
@@ -73,7 +69,11 @@ export const BookItem = ({filter, book, isFavorite}: BookItemProps):JSX.Element 
 const StyledBook = styled.div`
   width: 90%;
   padding: 10px;
-  /* border: 1px solid grey; */
+  cursor: pointer;
+  /* border: solid 1px white; */
+  &:hover {
+    background-color: lightgrey;
+  }
 `;
 
 const Image = styled.img`

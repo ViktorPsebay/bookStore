@@ -1,6 +1,6 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { booksInterface, usersInterface } from '../../types/types';
+import { booksInterface, reviewInterface, usersInterface } from '../../types/types';
 import { setUserInStore } from '../../api/setUser';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
@@ -10,11 +10,19 @@ import { AddingReview } from './AddingReview';
 import { postRate } from '../../api/postRate';
 import { getRatingForBook } from '../../api/getRatingForBook copy';
 import { BlockOfReview } from './BlockOfReview';
-import { Box } from '@material-ui/core';
+import { Box, Button, makeStyles, Select, Typography } from '@material-ui/core';
+import { getReviews } from '../../api/getReviews';
 
 export const BookCard = ():JSX.Element => {
   const { id }: {id: string} = useParams();
   const dispatch = useDispatch();
+
+  const useStyles = makeStyles({
+    price: {
+      color: 'green',
+    },
+  });
+  const classes = useStyles();
 
   interface RootState {
     authUser: usersInterface
@@ -34,12 +42,25 @@ export const BookCard = ():JSX.Element => {
     setBook(promiseBooks);
   };
 
+  const voidReview: reviewInterface = {
+    userId: null,
+    bookId: +id,    
+  };
+  const [reviews, setReview] = useState([voidReview]);
+
+  const loadReviews = async () => {
+    const promiseReviews = await getReviews(+id);
+    if (!promiseReviews) return;
+    setReview(promiseReviews);
+  };
+
   useEffect(() => {
     const token = 'Bearer ' + localStorage.getItem('userToken');
 
     dispatch(setUserInStore(token));
 
     loadBook();
+    loadReviews();
 
   }, []);
 
@@ -47,7 +68,7 @@ export const BookCard = ():JSX.Element => {
     e.preventDefault();
     const { rate } = e.currentTarget;
     const rating = {
-      rate: +rate[rate.selectedIndex].value,
+      rate: +rate.value,
       userId: user.id,
       bookId: +id,
     };
@@ -56,32 +77,48 @@ export const BookCard = ():JSX.Element => {
     loadBook();
   };
 
+  const publishReview = () => {
+    loadReviews();
+  };
+
+
   return (
     <div>
       <StyledBook>
         <Image src={`${serverUrl}/uploads/${book.image || 'book_placeholder.png'}`} />
         <Box>
-          <h2>{book.author}</h2>
-          <h1>{book.title}</h1>
-          <h3>{book.price}</h3>
-          <h3>{book.rating || 0}<img src='/image/star.png' style={{width: '15px'}}/></h3>
+          <Typography variant="h3" >{book.author}</Typography>
+          <Typography variant='h2'>{book.title}</Typography>
+          <Typography className={classes.price} variant='h3'>{book.price} p.</Typography>
+          <Typography color='primary' variant='h3'>
+            {book.rating || 0}<img src='/image/star.png' style={{width: '25px'}}/>
+          </Typography>
           <p>{book.description || null}</p>
        
           <form onSubmit={submitHandler}>
-            <select name="rate">
+            {/* <select name="rate">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
               <option value="5">5</option>
-            </select><br />
-            <input type="submit" value="Оценить" />
+            </select><br /> */}
+
+            <Select name="rate" defaultValue="5">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </Select>
+            <Button variant="contained" color="primary" type="submit">Оценить</Button>
+            {/* <input type="submit" value="Оценить" /> */}
           </form>
         </Box>
         
       </StyledBook>
-      <AddingReview bookId={+id} userId={user?.id || null}/>
-      <BlockOfReview id={+id}/>
+      <AddingReview bookId={+id} userId={user?.id || null} publishReview={publishReview}/>
+      <BlockOfReview reviews={reviews}/>
     </div>    
   );
 };
@@ -90,7 +127,6 @@ const StyledBook = styled.div`
   display: flex;
   width: 100%;
   padding: 10px;
-  /* border: 1px solid grey; */
 `;
 
 const Image = styled.img`

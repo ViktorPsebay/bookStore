@@ -8,6 +8,7 @@ export const addToFavorites = async (adding: {
     const response = await instance.post('/favorites/', adding);
       
     console.log(response.data);
+    alert(response.data);
   } catch(e) {
     console.log(e);
   }

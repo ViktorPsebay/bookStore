@@ -9,15 +9,16 @@ import { Sort } from './Books/Sort';
 
 interface SideBarProps {
   filter: (books: booksInterface[]) => void,
+  books: booksInterface[],
 }
 
-export const SideBar = ({filter}: SideBarProps): JSX.Element => {
+export const SideBar = ({filter, books}: SideBarProps): JSX.Element => {
 
   return (
     <SideBarStyle>
       <Categories filter={filter}/>      
       <Authors filter={filter}/>
-      <FilterByPrice filter={filter} />
+      <FilterByPrice filter={filter} books={books}/>
       <FilterByRating filter={filter} />
       <Sort filter={filter}/>
     </SideBarStyle>

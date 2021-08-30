@@ -1,10 +1,23 @@
-import React, { FormEvent } from 'react';
-import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { Button, FormHelperText, TextareaAutosize } from '@material-ui/core';
 import { reviewInterface } from '../../types/types';
 import { postReview } from '../../api/postReview';
+import { Form } from '../../styledComponents/Form';
 
-export const AddingReview = ({bookId, userId}: reviewInterface): JSX.Element => {
+export const AddingReview = ({publishReview, bookId, userId}: {
+  publishReview: () => void,
+  bookId: number,
+  userId: number | null,
+}): JSX.Element => {
+
+  const [reviewLength, setLength] = useState(0);
+
+  const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    const len = e.currentTarget.value.length;
+    setLength(len);
+  };
+
   const addingHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!userId) return alert('Вы не авторизованы');
@@ -14,19 +27,34 @@ export const AddingReview = ({bookId, userId}: reviewInterface): JSX.Element => 
       userId,
       textOfReview: textOfReview.value,
     };
-    await postReview(review);
+    if(await postReview(review)) 
+      publishReview();
   };
 
   return (
-    <form onSubmit={addingHandler}>
-      <AreaForReview name="textOfReview" /><br />
-      <Button type="submit" variant="contained" color="secondary">оставить отзыв</Button>
-    </form>
+    <Form onSubmit={addingHandler} >
+      <TextareaAutosize 
+        name="textOfReview"
+        maxRows={8}
+        minRows={3}
+        style={{width: '70%'}}
+        aria-label="review"
+        placeholder="Ваш отзыв. Максимальный размер отзыва - 255 символов"
+        onChange={changeHandler}
+      />
+
+      <FormHelperText error={(reviewLength >= 1000)} style={{marginBottom: '30px'}}>
+        {(reviewLength >= 1000) ? `максимальная длина отзыва - 1000 символов, текущая длина - ${reviewLength}` : null}
+      </ FormHelperText>
+
+      <Button 
+        type="submit"
+        variant="contained"
+        color="secondary"
+        disabled={(reviewLength >= 1000)}
+      >
+        оставить отзыв
+      </Button>
+    </Form>
   );
 };
-
-const AreaForReview = styled.textarea`
-  width: 95vw;
-  padding-left: 3%;
-  height: 200px;
-`;

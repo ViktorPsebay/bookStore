@@ -4,12 +4,12 @@ class ReviewController {
   async create(req, res) {
     try {
       const {textOfReview, userId, bookId} = req.body;
-      await Review.create({
+      const review = await Review.create({
         textOfReview,
         userId: userId || null,
         bookId: bookId || null,
       });
-      res.status(200).json('Отзыв успешно добавлен');
+      res.status(200).json(review);
     }
     catch(e) {
       console.log(e);

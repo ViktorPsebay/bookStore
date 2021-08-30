@@ -16,11 +16,11 @@ export const EditProfile =  ():JSX.Element => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    const {userName, email, birthday} = e.currentTarget;  
+    const {userName, birthday} = e.currentTarget;
     const user = {
       id: authUser.id,
       fullName: userName.value,
-      email: email.value,
+      email: authUser.email,
       birthday: birthday.value,
     };
     
@@ -46,16 +46,6 @@ export const EditProfile =  ():JSX.Element => {
         <TextField
           size='small'
           variant='outlined'
-          required 
-          type="email" 
-          name="email"
-          defaultValue={authUser.email}
-          label="email"
-        /><br /><br />
-        
-        <TextField
-          size='small'
-          variant='outlined'
           required
           type="date"
           name="birthday"
@@ -71,21 +61,21 @@ export const EditProfile =  ():JSX.Element => {
 };
 
 const Button = styled.input`
-width: 106px;
-height: 30px;
-border: solid 1px lightgrey;
-border-radius: 5px;
-margin: 40px;
-color: #fff;
-background-color: #3f51b5;
+  width: 106px;
+  height: 30px;
+  border: solid 1px lightgrey;
+  border-radius: 5px;
+  margin: 40px;
+  color: #fff;
+  background-color: #3f51b5;
 `;
 
 const Form = styled.form`
-padding: 70px 40vw;
+  padding: 70px 40vw;
 `;
 
 const PageTitle = styled.h1`
-font-family: 'Roboto';
-text-align: center;
-padding: 20px;
+  font-family: 'Roboto';
+  text-align: center;
+  padding: 20px;
 `;

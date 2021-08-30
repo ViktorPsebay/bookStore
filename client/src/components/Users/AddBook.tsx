@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { Box, InputLabel, TextField } from '@material-ui/core';
+import { Box, FormHelperText, InputLabel, TextField } from '@material-ui/core';
 
 import { authorsInterface, bookAuthorInterface, booksRequestInterface, categoriesInterface } from '../../types/types';
 import { setUserInStore } from '../../api/setUser';
@@ -13,13 +13,28 @@ import { postBook } from '../../api/postBook';
 import { postBookAuthor } from '../../api/postBookAuthor';
 import { postCategory } from '../../api/postCategory';
 import { postAuthor } from '../../api/postAuthor';
+import { useHistory } from 'react-router-dom';
 
 export const AddBook = (): JSX.Element => {
+  const history = useHistory(); 
+
   const voidArrayOfCategories: categoriesInterface[] = [];
   const [categories, setCategories] = useState(voidArrayOfCategories);
 
   const voidArrayOfAuthors: authorsInterface[] = [];
   const [authors, setAuthors] = useState(voidArrayOfAuthors);
+
+  const [isTitleError, setTitleError] = useState(false);
+  const [titleHelper, setTitleHelper] = useState('');
+
+  const [isPriceError, setPriceError] = useState(false);
+  const [priceHelper, setPriceHelper] = useState('');
+
+  const [isAuthorError, setAuthorError] = useState(false);
+  const [authorHelper, setAuthorHelper] = useState('');
+
+  const [isCategoryError, setCategoryError] = useState(false);
+  const [categoryHelper, setCategoryHelper] = useState('');
 
   const loadCategories = async () => {
     const promiseCategories = await getCategories();
@@ -44,17 +59,14 @@ export const AddBook = (): JSX.Element => {
   }, []);  
 
 
-
   const [author, setAuthor] = useState('');
   const handleChangeAuthor = (e: ChangeEvent<HTMLInputElement>) => {
-    // e.preventDefault();
     const { value }= e.currentTarget;
     setAuthor(value);
   };
 
   const [category, setCategory] = useState('');
   const handleChangeCategory = (e: ChangeEvent<HTMLInputElement>) => {
-    // e.preventDefault();
     const { value }= e.currentTarget;
     setCategory(value);
   };
@@ -62,12 +74,45 @@ export const AddBook = (): JSX.Element => {
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {titleOfBook, filedata, price} = e.currentTarget;
+    if (!titleOfBook.value.trim()) {
+      setTitleError(true);
+      setTitleHelper('Поле не должно быть пустым');
+      return;
+    }
+    
+    if (price.value > 1e7) {
+      setPriceError(true);
+      setPriceHelper('Цена не может превышать 1 000 000');
+      return;
+    }
+    
     const formData = new FormData();
-    // filedata.name = Math.random().toString();
+  
     if (filedata.files)
       formData.append('filedata', filedata.files[0]);
+
+    const normalizeAuthor=author.trim();
+    const normalizeCategory=category.trim();
+
+    setAuthor(normalizeAuthor);
+    setCategory(normalizeCategory);
+
+    if (!normalizeAuthor) {
+      setAuthorError(true);
+      setAuthorHelper('Выберите автора');
+      return;
+    }
+
+    if (!normalizeCategory) {
+      setCategoryError(true);
+      setCategoryHelper('Выберите категорию');
+      return;
+    }
     const currentCategory = categories.find(item => item.nameOfCategory === category);
     const currentAuthor = authors.find(item => item.name === author);
+
+    
+    
     if (!author || !category) return;
 
     let categoryId: number;
@@ -79,7 +124,7 @@ export const AddBook = (): JSX.Element => {
     else authorId = currentAuthor.id;
     
     const book : booksRequestInterface = {
-      title: titleOfBook.value,
+      title: titleOfBook.value.trim(),
       author,
       price: price.value,
       categoryId: categoryId,
@@ -92,12 +137,10 @@ export const AddBook = (): JSX.Element => {
       authorId,
     };
     postBookAuthor(bookAuthor);
-    if (!filedata.files[0]) return;
-    const res = await instance.post('books/upload', formData);
-    console.log(res);
+    if (filedata.files[0])
+      await instance.post('books/upload', formData);
 
-    console.log(filedata.files[0].name);
-    console.log(titleOfBook.value);
+    history.push(`/book_card/${bookId}`);
   };
 
 
@@ -113,15 +156,37 @@ export const AddBook = (): JSX.Element => {
           required type="text"
           name="titleOfBook"
           label="название книги"
-        />
+          error={isTitleError}
+          helperText = {titleHelper}
+        /><br /><br />
         
-        <br />
-        <br />
-        <TextField size='small' variant='outlined' required type="number" name="price" label="Цена"/><br /><br />
-    
+        <TextField
+          size='small'
+          variant='outlined'
+          required
+          type="number"
+          name="price"
+          label="Цена"
+          error={isPriceError}
+          helperText = {priceHelper}
+        /><br /><br />
+
         <InputLabel id="labelAuthor">Автор</InputLabel>
 
-        <Input type="text" list="authors" id="chosenAuthor" name="chosenAuthor" onChange={handleChangeAuthor}/>
+        <Input
+          type="text"
+          maxLength={30}
+          required
+          list="authors"
+          id="chosenAuthor"
+          name="chosenAuthor"
+          onChange={handleChangeAuthor}
+          // error={isAuthorError}
+          // helperText = {authorHelper}
+        />
+        <FormHelperText error={isAuthorError}>
+          {authorHelper}
+        </ FormHelperText>
 
         <datalist id="authors">
           {authors.map( author => (
@@ -130,13 +195,25 @@ export const AddBook = (): JSX.Element => {
         </datalist>
 
         <br /><br /><InputLabel id="labelCategory">Категория</InputLabel>
-        <Input type="text" list="categoties" onChange={handleChangeCategory}/>
+        <Input
+          required
+          type="text"
+          list="categoties"
+          onChange={handleChangeCategory}
+          // error={isCategoryError}
+          // helperText = {categoryHelper}
+        />
         <datalist id="categoties">
           {categories.map( category => (
             <option key={category.id} value={category.nameOfCategory}>{category.nameOfCategory}</option>
           ))}
-        </datalist>    
-        <br /><br /><InputLabel>добавить обложку</InputLabel><br />
+        </datalist>
+
+        <FormHelperText error={isCategoryError}>
+          {categoryHelper}
+        </ FormHelperText>
+
+        <br /><br /><InputLabel>добавить обложку</InputLabel><br />        
         <input type="file" name="filedata"/><br />
    
         <br /><Button type="submit" value="Добавить" />

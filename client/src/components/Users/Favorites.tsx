@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { booksInterface, usersInterface } from '../../types/types';
-import { setUserInStore } from '../../api/setUser';
 import { BooksList } from '../Books/BooksList';
 import { getFavorites } from '../../api/getFavorites';
 import { Pagination } from '../Books/Pagination';
@@ -51,17 +50,13 @@ export const Favorites =  ():JSX.Element => {
             <Pagination page={Math.ceil(books.length / countBooksOnPage)} choose={choosePage} />
           </div>
         )}
-      {/* <div style={{display: 'flex', flexDirection: 'column', width: '85%'}}>      
-        <BooksList books={books} isFavorite={true} page={page}/>
-        <Pagination page={Math.ceil(books.length / countBooksOnPage)} choose={choosePage} />
-      </div> */}
     </div>
   );
 };
 
 const Container = styled.div`
   padding: 0 20px;
-  background-color: lightgrey;
+  background-color: lightsteelblue;
   width: 15%;
   min-height:100vh;
 `;

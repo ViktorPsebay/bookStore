@@ -47,7 +47,7 @@ export const Books = ():JSX.Element => {
 
   return (
     <div style={{display: 'flex'}}>      
-      <SideBar filter={filterBooks} />
+      <SideBar filter={filterBooks} books={books}/>
       <div style={{width: '85%'}}>
         <BooksList books={books} page={page}/>
         <Pagination page={Math.ceil(count / countBooksOnPage)} choose={choosePage} />

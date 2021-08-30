@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { countBooksOnPage } from '../../consts';
 import { booksInterface } from '../../types/types';
 import { BookItem } from './BookItem';
@@ -21,10 +20,3 @@ export const BooksList = ({filter, books, isFavorite, page=1}: BooksListProps):J
     </div>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 0 20px;
-`;
