@@ -1,5 +1,8 @@
 import React from 'react';
-import { getBooksByCategory } from '../../api/getBooksByCategory';
+
+import { Typography } from '@material-ui/core';
+
+import { getBooksByCategory } from '../../api/bookAPI';
 import { booksInterface, categoriesInterface } from '../../types/types';
 
 interface CategoryItemProps {
@@ -15,7 +18,7 @@ export const CategoryItem = ({category, filter}: CategoryItemProps):JSX.Element 
 
   return (
     <li onClick={() => clickHandler(category.id)} style={{cursor: 'pointer'}}>
-      {category.nameOfCategory}
+      <Typography>{category.nameOfCategory}</Typography>
     </li>
   );
 };

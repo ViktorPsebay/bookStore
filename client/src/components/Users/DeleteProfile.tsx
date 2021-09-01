@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteUsers } from '../../api/deleteUser';
+import { deleteUsers } from '../../api/userAPI';
 import { useSelector } from 'react-redux';
 import { usersInterface } from '../../types/types';
-import { Box, TextField } from '@material-ui/core';
+import { Box, TextField, Typography } from '@material-ui/core';
+
 import styled from 'styled-components';
 
 export const DeleteProfile =  ():JSX.Element => {
@@ -29,16 +31,16 @@ export const DeleteProfile =  ():JSX.Element => {
       password: password.value,
     };
     
-    const token = 'Bearer ' + localStorage.getItem('userToken'); 
-
-    dispatch(deleteUsers(user, token));
- 
+    const token = 'Bearer ' + localStorage.getItem('userToken');
+    dispatch(deleteUsers(user, token)); 
   };
 
   return (
-    <Box>
-      <PageTitle>Удалить профиль</PageTitle>
-      <Form onSubmit={handleSubmit}>   
+    <Box>      
+      <Form onSubmit={handleSubmit}>
+        <PageTitle>
+          <Typography variant="h6">Удалить профиль</Typography>
+        </PageTitle>
        
         <TextField
           size='small'

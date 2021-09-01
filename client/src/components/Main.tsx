@@ -4,10 +4,8 @@ import { Auth } from './Users/Auth';
 import { EditProfile } from './Users/EditProfile';
 import { DeleteProfile } from './Users/DeleteProfile';
 import { Registration } from './Users/Registration';
-// import { Users } from './Users/Users';
 import { ProtectedRoute } from './ProtectedRoute';
 import { HomePage } from './HomePage';
-import { UserProfile } from './Users/UserProfile';
 import { Books } from './Books/';
 import { Favorites } from './Users/Favorites';
 import { AddBook } from './Users/AddBook';
@@ -23,10 +21,6 @@ export const Main = ():JSX.Element => {
       <Route path="/auth">
         <Auth />
       </Route>
-
-      {/* <Route path="/users">
-        <Users />
-      </Route> */}
 
       <Route path="/books">
         <Books />
@@ -50,10 +44,6 @@ export const Main = ():JSX.Element => {
 
       <ProtectedRoute path="/add_book">
         <AddBook />
-      </ProtectedRoute>
-
-      <ProtectedRoute path="/profile">
-        <UserProfile />
       </ProtectedRoute>
 
       <Route exact path="/">

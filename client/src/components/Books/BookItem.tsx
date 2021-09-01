@@ -1,11 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { addToFavorites } from '../../api/addToFavorites';
-import { removeFromFavorites } from '../../api/removeFromFavorites';
+import { addToFavorites, removeFromFavorites} from '../../api/FavoritesAPI';
 import { booksInterface, usersInterface } from '../../types/types';
 import styled from 'styled-components';
 import { serverUrl } from '../../consts';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 interface BookItemProps {
   book: booksInterface,
@@ -38,31 +37,53 @@ export const BookItem = ({filter, book, isFavorite}: BookItemProps):JSX.Element 
           <Container>
             <Image src={`${serverUrl}/uploads/${book.image || 'book_placeholder.png'}`} /><br />
           </Container>
+
           <Description>
             <Inscription>
-              <h3 style={{margin:'0', color: 'gray'}}>{book.author || null}</h3>
+              <Typography variant="h5" style={{color: 'gray'}}>{book.author || null}</Typography>
             </Inscription>
+
+            <Title>
+              <Typography 
+                variant="body1"
+                style={{maxHeight: '100%', overflow: 'hidden'}}
+              >
+                {book.title}
+              </Typography>
+            </Title>
+
             <Inscription>
-              <div style={{margin:'0', fontStyle: 'italic', maxHeight: '100%', overflow: 'hidden'}}>{book.title}</div>
+              <Typography variant="h6" style={{margin:'0', color: 'green'}}>
+                {book.price || null} p.
+              </Typography>
             </Inscription>
+
             <Inscription>
-              <h4 style={{margin:'0', color: 'green'}}>{book.price || null} p.</h4>
-            </Inscription>
-            <Inscription>
-              <h4 style={{margin:'0'}}>{book.rating || 0}<img src='image/star.png' style={{width: '15px'}}/></h4>
-            </Inscription>
-            
+              <Typography variant="h6">
+                {book.rating || 0}<img src='image/star.png' style={{width: '15px'}}/>
+              </Typography>
+            </Inscription>            
           </Description>
+
           {isFavorite ? 
-            <Button variant="contained" color="primary" onClick={(e) => {e.stopPropagation(); removingHandler();}}>удалить из избранного</Button> 
+            <Button 
+              variant="contained"
+              color="primary"
+              onClick={(e) => {e.stopPropagation(); removingHandler();}}
+            >
+              удалить из избранного
+            </Button> 
             :
-            <Button variant="contained" color="primary" onClick={(e) => {e.stopPropagation(); addingHandler();}}>В избранное</Button>}
-        </StyledBook>) : (<h1>Нет подходящих книг</h1>)
-    
-      }
-     
-    </div>
-    
+            <Button 
+              variant="contained"
+              color="primary"
+              onClick={(e) => {e.stopPropagation(); addingHandler();}}
+            >
+              В избранное
+            </Button>}
+        </StyledBook>) : (<h1>Нет подходящих книг</h1>)    
+      }     
+    </div>    
   );
 };
 
@@ -70,7 +91,6 @@ const StyledBook = styled.div`
   width: 90%;
   padding: 10px;
   cursor: pointer;
-  /* border: solid 1px white; */
   &:hover {
     background-color: lightgrey;
   }
@@ -89,15 +109,19 @@ const Container = styled.div`
 `;
 
 const Description = styled.div`
-  height: 150px;
+  height: 160px;
   width: 280px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* padding: 20px 5px; */
 `;
 
 const Inscription = styled.div`
-  height: 25%;
+  height: 23%;
+  width: 100%;
+`;
+
+const Title = styled.div`
+  height: 31%;
   width: 100%;
 `;

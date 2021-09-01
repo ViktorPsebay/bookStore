@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, FormHelperText, TextareaAutosize } from '@material-ui/core';
 import { reviewInterface } from '../../types/types';
-import { postReview } from '../../api/postReview';
+import { postReview } from '../../api/reviewAPI';
 import { Form } from '../../styledComponents/Form';
 
 export const AddingReview = ({publishReview, bookId, userId}: {

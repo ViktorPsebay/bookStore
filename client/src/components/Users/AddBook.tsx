@@ -2,17 +2,15 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { Box, FormHelperText, InputLabel, TextField } from '@material-ui/core';
+import { Box, FormHelperText, InputLabel, TextField, Typography } from '@material-ui/core';
 
 import { authorsInterface, bookAuthorInterface, booksRequestInterface, categoriesInterface } from '../../types/types';
-import { setUserInStore } from '../../api/setUser';
+import { setUserInStore } from '../../api/userAPI';
 import { instance } from '../../api';
-import { getCategories } from '../../api/getCategories';
-import { getAuthors } from '../../api/getAuthors';
-import { postBook } from '../../api/postBook';
-import { postBookAuthor } from '../../api/postBookAuthor';
-import { postCategory } from '../../api/postCategory';
-import { postAuthor } from '../../api/postAuthor';
+import { getCategories, postCategory} from '../../api/CategoryAPI';
+import { getAuthors, postAuthor} from '../../api/AuthorAPI';
+import { postBook } from '../../api/bookAPI';
+import { postBookAuthor } from '../../api/bookAuthorAPI';
 import { useHistory } from 'react-router-dom';
 
 export const AddBook = (): JSX.Element => {
@@ -50,7 +48,6 @@ export const AddBook = (): JSX.Element => {
 
   useEffect(() => {
     const token = 'Bearer ' + localStorage.getItem('userToken');
-
     dispatch(setUserInStore(token));
 
     loadCategories();
@@ -74,6 +71,7 @@ export const AddBook = (): JSX.Element => {
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {titleOfBook, filedata, price} = e.currentTarget;
+
     if (!titleOfBook.value.trim()) {
       setTitleError(true);
       setTitleHelper('Поле не должно быть пустым');
@@ -110,11 +108,7 @@ export const AddBook = (): JSX.Element => {
     }
     const currentCategory = categories.find(item => item.nameOfCategory === category);
     const currentAuthor = authors.find(item => item.name === author);
-
     
-    
-    if (!author || !category) return;
-
     let categoryId: number;
     if (!currentCategory) categoryId = await postCategory({nameOfCategory: category});
     else categoryId = currentCategory.id;
@@ -137,6 +131,7 @@ export const AddBook = (): JSX.Element => {
       authorId,
     };
     postBookAuthor(bookAuthor);
+
     if (filedata.files[0])
       await instance.post('books/upload', formData);
 
@@ -146,10 +141,10 @@ export const AddBook = (): JSX.Element => {
 
   return (
     <Box>
-      <PageTitle>Добавление книги</PageTitle>
-      <Form onSubmit={submitHandler}>
-        
-     
+      <PageTitle>
+        <Typography variant="h4">Добавление книги</Typography> 
+      </PageTitle>      
+      <Form onSubmit={submitHandler}>     
         <TextField
           size='small'
           variant='outlined'
@@ -181,9 +176,8 @@ export const AddBook = (): JSX.Element => {
           id="chosenAuthor"
           name="chosenAuthor"
           onChange={handleChangeAuthor}
-          // error={isAuthorError}
-          // helperText = {authorHelper}
         />
+
         <FormHelperText error={isAuthorError}>
           {authorHelper}
         </ FormHelperText>
@@ -200,8 +194,6 @@ export const AddBook = (): JSX.Element => {
           type="text"
           list="categoties"
           onChange={handleChangeCategory}
-          // error={isCategoryError}
-          // helperText = {categoryHelper}
         />
         <datalist id="categoties">
           {categories.map( category => (

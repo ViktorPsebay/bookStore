@@ -45,14 +45,6 @@ export interface reviewInterface {
   textOfReview?: string,
   id?: number,
 }
-
-// export interface reviewResponseInterface {
-//   id: number,
-//   textOfReview?: string,
-//   book: booksInterface,
-//   user: usersInterface,
-// }
-
 export interface booksRequestInterface {
   id?: number,
   title: string,  
@@ -70,7 +62,6 @@ export interface favoritesInterface {
   book: booksInterface,
   user: usersInterface,
 }
-
 
 export interface actionInterface {
   type: string,

@@ -1,12 +1,13 @@
-import { Box, List, ListItem } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+
+import { Box, List, ListItem, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { logout } from '../../api/logout';
-import { setUserInStore } from '../../api/setUser';
+import { logout, setUserInStore } from '../../api/userAPI';
 import { VoidLink } from '../../styledComponents/VoidLink';
 import { usersInterface } from '../../types/types';
+
+import styled from 'styled-components';
 
 export const UserProfile = ():JSX.Element => {
   interface RootState {
@@ -18,46 +19,52 @@ export const UserProfile = ():JSX.Element => {
   
   useEffect(() => {
     const token = 'Bearer ' + localStorage.getItem('userToken');
-
-    dispatch(setUserInStore(token));
- 
+    dispatch(setUserInStore(token)); 
   }, []);  
 
   return (
     <Box color="text.primary">
       {(user !== null) ?
         (<div>
-          <h1>Hello, {user.fullName}</h1>
+          <Typography variant="h4">Hello, {user.fullName}</Typography>
           <List style={{marginLeft: 0, paddingLeft: 0}}>
             <ListItem>
-              <Link to="/editing">Редактировать профиль</Link>
+              <Link component={NavElement} to="/editing">
+                <Typography variant="body1">Редактировать профиль</Typography>
+              </Link>
             </ListItem>
+
             <ListItem>
-              <Link to="/deleting">Удалить профиль</Link>
+              <Link component={NavElement} to="/deleting">
+                <Typography variant="body1">Удалить профиль</Typography>
+              </Link>
             </ListItem>
-            {/* <Li>
-              <Link to="/favorites">Избранное</Link>
-            </Li> */}
+
             <ListItem>
-              <Link to="/add_book">Добавить книгу</Link>
+              <Link component={NavElement} to="/add_book">
+                <Typography variant="body1">Добавить книгу</Typography>
+              </Link>
             </ListItem>
+
             <ListItem>
-              <VoidLink onClick={() => {logout();}}>Выйти</VoidLink>  
+              <VoidLink onClick={() => {logout();}}>
+                <Typography variant="body1">Выйти</Typography>
+              </VoidLink>  
             </ListItem>     
           </List>
-        </div>) : (<Box></Box>)}    
-      
+        </div>) 
+        :
+        (<Box></Box>)}      
     </Box>
   );
 };
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Li = styled.li`
-  list-style-type: circle;
-  padding: 20px 0;
-
+const NavElement = styled.a`
+  text-decoration: none;
+  &:visited {
+    color: black;
+  }
+  &:hover {
+    color: gray;
+  }
 `;

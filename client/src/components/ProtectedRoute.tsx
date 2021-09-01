@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { setUserInStore } from '../api/setUser';
-import { checkToken } from '../api/checkToken';
+import { setUserInStore, checkToken } from '../api/userAPI';
 
 export const ProtectedRoute = ({ children, ...rest }: {children: JSX.Element, path: string}): JSX.Element => {
  

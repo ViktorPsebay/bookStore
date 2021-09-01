@@ -1,7 +1,8 @@
-import { Button, TextField } from '@material-ui/core';
 import React from 'react';
+
+import { Button, TextField, Typography } from '@material-ui/core';
 import { FormEvent } from 'react';
-import { authUser } from '../../api/auth';
+import { authUser } from '../../api/userAPI';
 import { Form } from '../../styledComponents/Form';
 
 export const Auth =  ():JSX.Element => {
@@ -18,8 +19,10 @@ export const Auth =  ():JSX.Element => {
 
   return (
     <div>
+      <div style={{textAlign: 'center', padding: '30px'}}>
+        <Typography variant="h6">Авторизация</Typography>
+      </div>
       <Form action="" onSubmit={handleSubmit}>
-        <h3 className="label">Авторизация</h3>
         <TextField 
           size='small'
           variant='outlined' 
@@ -43,3 +46,4 @@ export const Auth =  ():JSX.Element => {
     </div>
   );
 };
+

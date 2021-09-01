@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { usersInterface } from '../types/types';
@@ -6,10 +7,10 @@ import { useState } from 'react';
 import { Modal } from './Users/Modal';
 import { modesOfLogin } from '../consts';
 import { VoidLink } from '../styledComponents/VoidLink';
+
 import styled, { css } from 'styled-components';
 
 export const Header = ():JSX.Element => {
-
   const [visibility, setVisibility] = useState(false);
   const [login, setLogin] = useState(modesOfLogin.authorization);
 
@@ -32,23 +33,17 @@ export const Header = ():JSX.Element => {
 
   const isAuth = useSelector((state: RootState) => state.authUser);
   return (
-    <nav style={{backgroundColor: 'lightblue'}}>
+    <nav style={{borderBottom: 'solid 1px gray'}}>
       <NavBar>
         <li>
-          <Link to="/">Дом</Link>
+          <Link component={NavElement} to="/">Дом</Link>
         </li>
-        {/* <li>
-          <Link to="/users">Пользователи</Link>
-        </li> */}
         <li>
-          <Link to="/books">Книги</Link>
+          <Link component={NavElement} to="/books">Книги</Link>
         </li>        
-        {/* <li>
-          <Link to="/private">Приватная страница</Link>
-        </li> */}
         {isAuth ? (
           <li>
-            <Link to="/favorites"><img src='/image/avatar.webp' style={{width: '25px'}}/></Link>
+            <Link component={NavElement} to="/favorites"><img src='/image/avatar.webp' style={{width: '25px'}}/></Link>
           </li>
         ) : (
           <div>
@@ -62,7 +57,12 @@ export const Header = ():JSX.Element => {
         )
         }       
       </NavBar>
-      {visibility ? (<Modal mode={login} clickModalHandler={clickModalHandler} />) : null}
+      {visibility
+        ? 
+        (<Modal mode={login} clickModalHandler={clickModalHandler} />) 
+        :
+        null
+      }
     </nav>
   );
 };
@@ -77,4 +77,14 @@ const NavBar = styled.ul`
     css`
      list-style-type: none; 
     `};
+`;
+
+const NavElement = styled.a`
+  text-decoration: none;
+  &:visited {
+    color: black;
+  }
+  &:hover {
+    color: gray;
+  }
 `;

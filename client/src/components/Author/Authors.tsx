@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { authorsInterface, booksInterface } from '../../types/types';
 import { AuthorsList } from './AuthorsList';
-import { getAuthors } from '../../api/getAuthors';
+import { getAuthors } from '../../api/AuthorAPI';
+import { Typography } from '@material-ui/core';
 
 interface AuthorsProps {
   filter: (books: booksInterface[]) => void,
 }
-
 
 export const Authors = ({filter}: AuthorsProps):JSX.Element => {
   const voidArrayOfAuthors: authorsInterface[] = [];
@@ -18,14 +18,12 @@ export const Authors = ({filter}: AuthorsProps):JSX.Element => {
   };
 
   useEffect(() => {
-
-    loadBooks();
- 
+    loadBooks(); 
   }, []);  
 
   return (
     <div>
-      Авторы
+      <Typography>Авторы</Typography>      
       <AuthorsList authors={authors} filter={filter} />
     </div>
   );

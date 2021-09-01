@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 export const VoidLink = styled.p`
-  text-decoration: underline;
-  color: blue;
+  text-decoration: none;
   cursor: pointer;
+  &:hover {
+    color: gray;
+  }
 `;

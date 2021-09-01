@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
+
 import { useSelector } from 'react-redux';
 import { booksInterface, usersInterface } from '../../types/types';
 import { BooksList } from '../Books/BooksList';
-import { getFavorites } from '../../api/getFavorites';
+import { getFavorites } from '../../api/FavoritesAPI';
 import { Pagination } from '../Books/Pagination';
 import { countBooksOnPage } from '../../consts';
 import { UserProfile } from './UserProfile';
+
 import styled from 'styled-components';
+import { Typography } from '@material-ui/core';
 
 export const Favorites =  ():JSX.Element => {
   const voidArrayOfBooks: booksInterface[] = [];
@@ -42,8 +45,9 @@ export const Favorites =  ():JSX.Element => {
       <Container>
         <UserProfile />
       </Container>
+
       {!books.length ? 
-        <h2>Пока в избранном ничего нет</h2> :
+        <Typography variant='h4'>Пока в избранном ничего нет</Typography> :
         (
           <div style={{display: 'flex', flexDirection: 'column', width: '85%'}}>      
             <BooksList books={books} isFavorite={true} page={page} filter={removingFromFavorites}/>
@@ -56,7 +60,7 @@ export const Favorites =  ():JSX.Element => {
 
 const Container = styled.div`
   padding: 0 20px;
-  background-color: lightsteelblue;
+  /* background-color: lightsteelblue; */
   width: 15%;
   min-height:100vh;
 `;

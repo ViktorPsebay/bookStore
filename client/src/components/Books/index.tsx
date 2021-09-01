@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { booksInterface } from '../../types/types';
-import { setUserInStore } from '../../api/setUser';
-import { getBooks } from '../../api/getBooks';
+
 import { BooksList } from './BooksList';
-import { SideBar } from '../SideBar';
+import { SideBar } from './SideBar';
 import { Pagination } from './Pagination';
-import { getCountOfBooks } from '../../api/getCountOfBooks';
+
+import { setUserInStore } from '../../api/userAPI';
+import { getBooks, getCountOfBooks} from '../../api/bookAPI';
+
+import { booksInterface } from '../../types/types';
 import { countBooksOnPage } from '../../consts';
 
 export const Books = ():JSX.Element => {
@@ -35,7 +37,6 @@ export const Books = ():JSX.Element => {
     setCount(books.length);
   };
 
-
   useEffect(() => {
     const token = 'Bearer ' + localStorage.getItem('userToken');
 
@@ -47,7 +48,8 @@ export const Books = ():JSX.Element => {
 
   return (
     <div style={{display: 'flex'}}>      
-      <SideBar filter={filterBooks} books={books}/>
+      <SideBar filter={filterBooks} />
+
       <div style={{width: '85%'}}>
         <BooksList books={books} page={page}/>
         <Pagination page={Math.ceil(count / countBooksOnPage)} choose={choosePage} />

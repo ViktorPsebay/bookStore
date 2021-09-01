@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { setUserInStore } from '../api/setUser';
+import { setUserInStore } from '../api/userAPI';
 
 export const HomePage = ():JSX.Element => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ export const HomePage = ():JSX.Element => {
     dispatch(setUserInStore(token));
  
   });
+  
   return (<Redirect
     to={{
       pathname: '/favorites'

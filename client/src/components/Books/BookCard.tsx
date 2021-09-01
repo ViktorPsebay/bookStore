@@ -1,17 +1,16 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { booksInterface, reviewInterface, usersInterface } from '../../types/types';
-import { setUserInStore } from '../../api/setUser';
+import { setUserInStore } from '../../api/userAPI';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { getOneBookById } from '../../api/getOneBookById';
+import { getOneBookById, getRatingForBook} from '../../api/bookAPI';
 import { serverUrl } from '../../consts';
 import { AddingReview } from './AddingReview';
-import { postRate } from '../../api/postRate';
-import { getRatingForBook } from '../../api/getRatingForBook copy';
+import { postRate } from '../../api/rateAPI';
 import { BlockOfReview } from './BlockOfReview';
 import { Box, Button, makeStyles, Select, Typography } from '@material-ui/core';
-import { getReviews } from '../../api/getReviews';
+import { getReviews } from '../../api/reviewAPI';
 
 export const BookCard = ():JSX.Element => {
   const { id }: {id: string} = useParams();
@@ -56,12 +55,10 @@ export const BookCard = ():JSX.Element => {
 
   useEffect(() => {
     const token = 'Bearer ' + localStorage.getItem('userToken');
-
     dispatch(setUserInStore(token));
 
     loadBook();
     loadReviews();
-
   }, []);
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -72,6 +69,7 @@ export const BookCard = ():JSX.Element => {
       userId: user.id,
       bookId: +id,
     };
+
     await postRate(rating);
     await getRatingForBook(id);
     loadBook();
@@ -80,7 +78,6 @@ export const BookCard = ():JSX.Element => {
   const publishReview = () => {
     loadReviews();
   };
-
 
   return (
     <div>
@@ -93,17 +90,8 @@ export const BookCard = ():JSX.Element => {
           <Typography color='primary' variant='h3'>
             {book.rating || 0}<img src='/image/star.png' style={{width: '25px'}}/>
           </Typography>
-          <p>{book.description || null}</p>
        
           <form onSubmit={submitHandler}>
-            {/* <select name="rate">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select><br /> */}
-
             <Select name="rate" defaultValue="5">
               <option value="1">1</option>
               <option value="2">2</option>
@@ -112,12 +100,13 @@ export const BookCard = ():JSX.Element => {
               <option value="5">5</option>
             </Select>
             <Button variant="contained" color="primary" type="submit">Оценить</Button>
-            {/* <input type="submit" value="Оценить" /> */}
+            
           </form>
-        </Box>
-        
+        </Box>        
       </StyledBook>
+      
       <AddingReview bookId={+id} userId={user?.id || null} publishReview={publishReview}/>
+
       <BlockOfReview reviews={reviews}/>
     </div>    
   );

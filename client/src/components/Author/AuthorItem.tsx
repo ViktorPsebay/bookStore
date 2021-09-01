@@ -1,5 +1,6 @@
 import React from 'react';
-import { getBooksByAuthor } from '../../api/getBooksByAuthor';
+import { Typography } from '@material-ui/core';
+import { getBooksByAuthor } from '../../api/bookAPI';
 import { authorsInterface, booksInterface } from '../../types/types';
 
 interface AuthorItemProps {
@@ -15,7 +16,7 @@ export const AuthorItem = ({author, filter}: AuthorItemProps):JSX.Element => {
 
   return (
     <li onClick={() => clickHandler(author.id)} style={{cursor: 'pointer'}}>
-      {author.name}
+      <Typography>{author.name}</Typography>
     </li>
   );
 };

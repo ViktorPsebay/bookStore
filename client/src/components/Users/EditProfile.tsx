@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editUsers } from '../../api/editUser';
+import { editUsers } from '../../api/userAPI';
 import { usersInterface } from '../../types/types';
+import { Box, TextField, Typography } from '@material-ui/core';
+
 import styled from 'styled-components';
-import { Box, TextField } from '@material-ui/core';
 
 export const EditProfile =  ():JSX.Element => {
   const dispatch = useDispatch();
@@ -30,8 +32,10 @@ export const EditProfile =  ():JSX.Element => {
 
   return (
     <Box>
-      <PageTitle>Редактировать профиль</PageTitle>
       <Form onSubmit={handleSubmit}>
+        <PageTitle>
+          <Typography variant="h6">Редактировать профиль</Typography>
+        </PageTitle>
        
         <TextField 
           size='small'
@@ -50,7 +54,6 @@ export const EditProfile =  ():JSX.Element => {
           type="date"
           name="birthday"
           defaultValue={authUser.birthday?.toString()}
-          label="дата рождения"
         /><br /><br />
         
         <br /><Button type="submit" value="Изменить" />
