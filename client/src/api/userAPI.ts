@@ -176,3 +176,22 @@ export const checkToken = async (token: string): Promise<boolean> => {
   }
 
 };
+
+export const getOneUser = async (token: string): Promise<usersInterface> => {
+  
+  try {
+    const response = await instance('/users/token/check', {
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        'authorization': token
+      }
+    });      
+    
+    if (response.status === 200) return response.data;
+    return {id:-1, email:''};
+  } catch(e) {
+    console.log(e);
+    return {id:-1, email:''};
+  }
+
+};

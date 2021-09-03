@@ -1,19 +1,23 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { Box, FormHelperText, InputLabel, TextField, Typography } from '@material-ui/core';
 
 import { authorsInterface, bookAuthorInterface, booksRequestInterface, categoriesInterface } from '../../types/types';
-import { setUserInStore } from '../../api/userAPI';
 import { instance } from '../../api';
-import { getCategories, postCategory} from '../../api/CategoryAPI';
+import { getCategories, postCategory} from '../../api/categoryAPI';
 import { getAuthors, postAuthor} from '../../api/AuthorAPI';
 import { postBook } from '../../api/bookAPI';
 import { postBookAuthor } from '../../api/bookAuthorAPI';
 import { useHistory } from 'react-router-dom';
 
-export const AddBook = (): JSX.Element => {
+
+interface addBookProps {
+  sendNotification: (id: number) => void,
+}
+
+
+export const AddBook = ({sendNotification}: addBookProps): JSX.Element => {
   const history = useHistory(); 
 
   const voidArrayOfCategories: categoriesInterface[] = [];
@@ -44,15 +48,10 @@ export const AddBook = (): JSX.Element => {
     setAuthors(promiseAuthors);
   };
 
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = 'Bearer ' + localStorage.getItem('userToken');
-    dispatch(setUserInStore(token));
-
     loadCategories();
     loadAuthors();
- 
   }, []);  
 
 
@@ -70,6 +69,8 @@ export const AddBook = (): JSX.Element => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    
     const {titleOfBook, filedata, price} = e.currentTarget;
 
     if (!titleOfBook.value.trim()) {
@@ -134,6 +135,8 @@ export const AddBook = (): JSX.Element => {
 
     if (filedata.files[0])
       await instance.post('books/upload', formData);
+    
+    sendNotification(bookId);
 
     history.push(`/book_card/${bookId}`);
   };
@@ -236,8 +239,7 @@ const Form = styled.form`
   padding: 70px 40vw;
 `;
 
-const PageTitle = styled.h1`
-  font-family: 'Roboto';
+const PageTitle = styled.div`
   text-align: center;
   padding: 20px;
 `;

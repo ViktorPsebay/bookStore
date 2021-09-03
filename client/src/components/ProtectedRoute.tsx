@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { setUserInStore, checkToken } from '../api/userAPI';
+import { checkToken } from '../api/userAPI';
 
 export const ProtectedRoute = ({ children, ...rest }: {children: JSX.Element, path: string}): JSX.Element => {
  
-  const dispatch = useDispatch();
   const [hasRight, setRight] = useState(true);
 
   const check = async () => {
@@ -15,8 +13,6 @@ export const ProtectedRoute = ({ children, ...rest }: {children: JSX.Element, pa
   };
 
   useEffect(() => {        
-    const token = 'Bearer ' + localStorage.getItem('userToken');
-    dispatch(setUserInStore(token));
     check();
   }, []);
   

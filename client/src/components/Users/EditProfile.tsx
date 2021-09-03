@@ -8,13 +8,15 @@ import { Box, TextField, Typography } from '@material-ui/core';
 
 import styled from 'styled-components';
 
-export const EditProfile =  ():JSX.Element => {
+export const EditProfile = ():JSX.Element => {
   const dispatch = useDispatch();
 
   interface RootState {
     authUser: usersInterface,
-  }  
-  const authUser = useSelector((state: RootState) => state.authUser) || 0;  
+  } 
+  const token = 'Bearer ' + localStorage.getItem('userToken');
+  
+  const authUser = useSelector((state: RootState) => state.authUser) || 0;
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -26,7 +28,6 @@ export const EditProfile =  ():JSX.Element => {
       birthday: birthday.value,
     };
     
-    const token = 'Bearer ' + localStorage.getItem('userToken');
     dispatch(editUsers(user, token));
   };
 
@@ -77,8 +78,7 @@ const Form = styled.form`
   padding: 70px 40vw;
 `;
 
-const PageTitle = styled.h1`
-  font-family: 'Roboto';
+const PageTitle = styled.div`
   text-align: center;
   padding: 20px;
 `;

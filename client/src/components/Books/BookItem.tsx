@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { addToFavorites, removeFromFavorites} from '../../api/FavoritesAPI';
+import { addToFavorites, removeFromFavorites} from '../../api/favoritesAPI';
 import { booksInterface, usersInterface } from '../../types/types';
 import styled from 'styled-components';
 import { serverUrl } from '../../consts';
@@ -60,7 +60,7 @@ export const BookItem = ({filter, book, isFavorite}: BookItemProps):JSX.Element 
 
             <Inscription>
               <Typography variant="h6">
-                {book.rating || 0}<img src='image/star.png' style={{width: '15px'}}/>
+                {book.rating?.toFixed(1) || 0}<img src='image/star.png' style={{width: '15px'}}/>
               </Typography>
             </Inscription>            
           </Description>

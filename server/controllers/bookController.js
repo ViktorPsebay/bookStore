@@ -140,7 +140,7 @@ class BookController {
     }
   }
 
-    async getCountOfBooks(req, res) {
+  async getCountOfBooks(req, res) {
     try {
       const count = await Book.count();
       res.status(200).json(count);

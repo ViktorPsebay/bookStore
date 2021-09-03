@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { CategoriesList } from './CategoriesList';
-import { getCategories } from '../../api/CategoryAPI';
+import { getCategories } from '../../api/categoryAPI';
 import { Typography } from '@material-ui/core';
 
 import { booksInterface, categoriesInterface } from '../../types/types';

@@ -35,3 +35,10 @@ export const setUser = (users: usersInterface[]): actionInterface => {
     payload: users,
   };
 };
+
+export const setCountOfNewBooks = (): actionInterface => {
+  return {
+    type: typesOfAction.setCountOfNewBooks,
+    payload: [],
+  };
+};

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { booksInterface, usersInterface } from '../../types/types';
 import { BooksList } from '../Books/BooksList';
-import { getFavorites } from '../../api/FavoritesAPI';
+import { getFavorites } from '../../api/favoritesAPI';
 import { Pagination } from '../Books/Pagination';
 import { countBooksOnPage } from '../../consts';
 import { UserProfile } from './UserProfile';

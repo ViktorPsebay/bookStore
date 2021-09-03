@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { BooksList } from './BooksList';
 import { SideBar } from './SideBar';
 import { Pagination } from './Pagination';
 
-import { setUserInStore } from '../../api/userAPI';
 import { getBooks, getCountOfBooks} from '../../api/bookAPI';
 
 import { booksInterface } from '../../types/types';
@@ -18,8 +16,7 @@ export const Books = ():JSX.Element => {
 
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
-  const dispatch = useDispatch();
-
+ 
   const choosePage = async (page: number) => {
     setPage(page);
   };
@@ -38,9 +35,9 @@ export const Books = ():JSX.Element => {
   };
 
   useEffect(() => {
-    const token = 'Bearer ' + localStorage.getItem('userToken');
+    // const token = 'Bearer ' + localStorage.getItem('userToken');
 
-    dispatch(setUserInStore(token));
+    // dispatch(setUserInStore(token));
 
     loadBooks();
  

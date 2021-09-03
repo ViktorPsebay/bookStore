@@ -11,7 +11,11 @@ import { Favorites } from './Users/Favorites';
 import { AddBook } from './Users/AddBook';
 import { BookCard } from './Books/BookCard';
 
-export const Main = ():JSX.Element => {
+interface mainProps {
+  sendNotification: (id: number) => void,
+}
+
+export const Main = ({sendNotification}: mainProps):JSX.Element => {
   return (
     <Switch>
       <Route path="/registration">
@@ -43,7 +47,7 @@ export const Main = ():JSX.Element => {
       </ProtectedRoute>
 
       <ProtectedRoute path="/add_book">
-        <AddBook />
+        <AddBook sendNotification={sendNotification}/>
       </ProtectedRoute>
 
       <Route exact path="/">

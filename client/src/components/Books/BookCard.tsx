@@ -1,7 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { booksInterface, reviewInterface, usersInterface } from '../../types/types';
-import { setUserInStore } from '../../api/userAPI';
+
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { getOneBookById, getRatingForBook} from '../../api/bookAPI';
@@ -14,8 +14,7 @@ import { getReviews } from '../../api/reviewAPI';
 
 export const BookCard = ():JSX.Element => {
   const { id }: {id: string} = useParams();
-  const dispatch = useDispatch();
-
+  
   const useStyles = makeStyles({
     price: {
       color: 'green',
@@ -54,9 +53,6 @@ export const BookCard = ():JSX.Element => {
   };
 
   useEffect(() => {
-    const token = 'Bearer ' + localStorage.getItem('userToken');
-    dispatch(setUserInStore(token));
-
     loadBook();
     loadReviews();
   }, []);

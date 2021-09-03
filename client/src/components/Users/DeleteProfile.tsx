@@ -69,21 +69,20 @@ export const DeleteProfile =  ():JSX.Element => {
 };
 
 const Button = styled.input`
-width: 106px;
-height: 30px;
-border: solid 1px lightgrey;
-border-radius: 5px;
-margin: 40px;
-color: #fff;
-background-color: #3f51b5;
+  width: 106px;
+  height: 30px;
+  border: solid 1px lightgrey;
+  border-radius: 5px;
+  margin: 40px;
+  color: #fff;
+  background-color: #3f51b5;
 `;
 
 const Form = styled.form`
-padding: 70px 40vw;
+  padding: 70px 40vw;
 `;
 
-const PageTitle = styled.h1`
-font-family: 'Roboto';
-text-align: center;
-padding: 20px;
+const PageTitle = styled.div`
+  text-align: center;
+  padding: 20px;
 `;

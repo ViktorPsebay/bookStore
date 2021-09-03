@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Box, List, ListItem, Typography } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout, setUserInStore } from '../../api/userAPI';
+import { logout } from '../../api/userAPI';
 import { VoidLink } from '../../styledComponents/VoidLink';
 import { usersInterface } from '../../types/types';
 
@@ -15,20 +15,13 @@ export const UserProfile = ():JSX.Element => {
   }
   const user = useSelector((state: RootState) => state.authUser);
 
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    const token = 'Bearer ' + localStorage.getItem('userToken');
-    dispatch(setUserInStore(token)); 
-  }, []);  
-
   return (
     <Box color="text.primary">
       {(user !== null) ?
         (<div>
           <Typography variant="h4">Hello, {user.fullName}</Typography>
           <List style={{marginLeft: 0, paddingLeft: 0}}>
-            <ListItem>
+            <ListItem> 
               <Link component={NavElement} to="/editing">
                 <Typography variant="body1">Редактировать профиль</Typography>
               </Link>

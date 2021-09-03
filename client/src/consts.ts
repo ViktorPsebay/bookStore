@@ -5,6 +5,7 @@ export const typesOfAction = {
   addUsers: 'ADD_USERS',
   addOneUser: 'ADD_ONE_USER',
   setUser: 'SET_USER',
+  setCountOfNewBooks: 'SET_COUNT',
 };
 
 export const modesOfLogin = {

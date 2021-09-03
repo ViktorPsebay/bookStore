@@ -1,9 +1,14 @@
 import { typesOfAction } from '../consts';
 import { usersInterface } from '../types/types';
 
-const defaultState: {users: usersInterface[], authUser: usersInterface | null} = {
+const defaultState: {
+  users: usersInterface[],
+  authUser: usersInterface | null,
+  countOfNewBooks: number,
+} = {
   users: [],
   authUser: null,
+  countOfNewBooks: 0,
 };
 
 const deleteUser = (currentUser: usersInterface[], allUsers: usersInterface[]) => {
@@ -32,8 +37,13 @@ const setUser = (currentUser: usersInterface[]) => {
   };
 };
 
+
 export const reducer = (state = defaultState, action: {type: string, payload: usersInterface[] | []}): 
-{users: usersInterface[], authUser: usersInterface | null} => {
+{
+  users: usersInterface[],
+  authUser: usersInterface | null,
+  countOfNewBooks: number,
+} => {
   switch (action.type) {
   case typesOfAction.addUsers: {
     return { ...state, users: [...state.users, ...action.payload] };
@@ -53,6 +63,12 @@ export const reducer = (state = defaultState, action: {type: string, payload: us
     const user = setUser(action.payload);
     return { ...state, authUser: user };
   }
+
+  case typesOfAction.setCountOfNewBooks: {
+    
+    return { ...state, countOfNewBooks: state.countOfNewBooks + 1 };
+  }
+
     break;
   default:
     return state;
